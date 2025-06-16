@@ -18,14 +18,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { countries } from "countries-list";
 
-const RequiredLabel = ({ children }) => (
+export const RequiredLabel = ({ children }) => (
   <label className="block text-sm font-medium mb-1">
     {children}
     <span className="text-red-500 ml-1">*</span>
   </label>
 );
 
-const OptionalLabel = ({ children }) => (
+export const OptionalLabel = ({ children }) => (
   <label className="block text-sm font-medium mb-1 text-muted-foreground">
     {children}
   </label>
@@ -73,6 +73,7 @@ export default function CompanyDetails() {
 
   const onSubmit = (data) => {
     setCompanyDetails(data);
+
     if (
       data.name &&
       data.address &&
@@ -83,13 +84,14 @@ export default function CompanyDetails() {
       data.companyEmail &&
       data.companyPhone
     ) {
+      localStorage.setItem("companyDetails", JSON.stringify(data));
       setActiveTab("customer");
     }
   };
 
   return (
     <div className="relative h-[100vh] ">
-      <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-2 border-b">
+      <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-4 border-b">
         <BsBuildings className="text-2xl text-[#0369a1]" />
         <p className="font-bold">Enter Company Details</p>
       </div>

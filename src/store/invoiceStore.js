@@ -1,10 +1,11 @@
 import { create } from "zustand";
 
-// Generate a consistent invoice number
+// Generate a deterministic invoice number
 const generateInvoiceNumber = () => {
-  const timestamp = Date.now();
-  const random = Math.floor(Math.random() * 1000);
-  return `${timestamp}${random}`.slice(-5);
+  // Use a fixed seed for consistent generation
+  const seed = 10000;
+  const baseNumber = Math.floor(seed + Math.random() * 90000);
+  return baseNumber.toString().padStart(5, "0");
 };
 
 const useInvoiceStore = create((set) => ({
@@ -16,16 +17,21 @@ const useInvoiceStore = create((set) => ({
 
   // Company Details
   companyDetails: {
-    name: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    companyLogoUrl: null,
-    companyEmail: "",
-    companyPhone: "",
-    companyWebsite: null,
+    ...JSON.parse(
+      localStorage.getItem("companyDetails") ||
+        JSON.stringify({
+          name: "",
+          address: "",
+          city: "",
+          state: "",
+          zip: "",
+          country: "",
+          companyLogoUrl: null,
+          companyEmail: "",
+          companyPhone: "",
+          companyWebsite: null,
+        })
+    ),
   },
   setCompanyDetails: (details) =>
     set((state) => ({
@@ -50,7 +56,8 @@ const useInvoiceStore = create((set) => ({
 
   // Invoice Details
   invoiceDetails: {
-    invoiceNumber: `#1${generateInvoiceNumber()}`,
+    // invoiceNumber: `#1${generateInvoiceNumber()}`,
+    invoiceNumber: `#10009`,
     invoiceDate: new Date()
       .toLocaleDateString("en-GB", {
         day: "2-digit",
@@ -85,7 +92,7 @@ const useInvoiceStore = create((set) => ({
   // Reset all data
   resetAll: () =>
     set({
-      activeTab: "company",
+      activeTab: "company-details",
       companyDetails: {
         name: "",
         address: "",
@@ -109,7 +116,7 @@ const useInvoiceStore = create((set) => ({
         phone: "",
       },
       invoiceDetails: {
-        invoiceNumber: `#${generateInvoiceNumber()}`,
+        invoiceNumber: `#1${generateInvoiceNumber()}`,
         invoiceDate: new Date()
           .toLocaleDateString("en-GB", {
             day: "2-digit",

@@ -28,12 +28,12 @@ export default function DisplayInvoice() {
 
             {companyDetails?.city ? (
               <div className="flex flex-col  ">
-                <p className="text-gray-600 text-right">
+                <p className="text-gray-600 text-right capitalize">
                   {companyDetails?.address || "Company Address"}
                 </p>
-                <p className="text-gray-600 text-right">
+                <p className="text-gray-600 text-right capitalize">
                   {companyDetails?.city || "City"},{" "}
-                  {companyDetails?.state || "State"}-{" "}
+                  {companyDetails?.state || "State"}-
                   {companyDetails?.zip || "Zip"}{" "}
                   {companyDetails?.country || "Country"}
                 </p>

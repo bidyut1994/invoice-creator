@@ -9,6 +9,7 @@ import Customer from "./module/Customer";
 import ProductDetails from "./module/ProductDetails";
 import PaymentDetails from "./module/PaymentDetails";
 import DisplayInvoice from "./module/DisplayInvoice";
+import { motion } from "framer-motion";
 
 export default function Home() {
   const { activeTab, companyDetails } = useInvoiceStore();
@@ -19,8 +20,24 @@ export default function Home() {
         <Sidebar />
       </div>
       <div className="ml-[6vw] w-[40vw] h-screen   border-r border-gray-200 fixed  top-0 ">
-        {activeTab === "company-details" && <CompanyDetails />}
-        {activeTab === "customer" && <Customer />}
+        {activeTab === "company-details" && (
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+          >
+            <CompanyDetails />
+          </motion.div>
+        )}
+        {activeTab === "customer" && (
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 }}
+          >
+            <Customer />
+          </motion.div>
+        )}
         {activeTab === "product-details" && <ProductDetails />}
         {activeTab === "payment-details" && <PaymentDetails />}
       </div>
