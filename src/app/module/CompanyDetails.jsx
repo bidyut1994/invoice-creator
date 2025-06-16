@@ -6,6 +6,7 @@ import { companyDetailsSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
 import { useEffect, useCallback, useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -61,7 +62,6 @@ export default function CompanyDetails() {
     debouncedUpdate(formValues);
   }, [formValues, debouncedUpdate]);
 
-  // Convert countries object to array and sort by name
   const countriesList = Object.entries(countries)
     .map(([code, country]) => ({
       code,
@@ -112,7 +112,8 @@ export default function CompanyDetails() {
 
             <div>
               <RequiredLabel>Address</RequiredLabel>
-              <input
+              <textarea
+                rows={3}
                 {...register("address")}
                 className="w-full p-2 border rounded-md"
                 placeholder="Enter address"
