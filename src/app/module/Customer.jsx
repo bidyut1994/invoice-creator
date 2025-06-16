@@ -6,7 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { customerSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback } from "react";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { countries } from "countries-list";
-import { motion } from "framer-motion";
 
 const RequiredLabel = ({ children }) => (
   <label className="block text-sm font-medium mb-1">
@@ -31,48 +30,6 @@ const OptionalLabel = ({ children }) => (
     {children}
   </label>
 );
-
-const containerVariants = {
-  hidden: {
-    x: "100%",
-    opacity: 0,
-  },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-      staggerChildren: 0.1,
-    },
-  },
-  exit: {
-    x: "-100%",
-    opacity: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: {
-    x: 50,
-    opacity: 0,
-  },
-  visible: {
-    x: 0,
-    opacity: 1,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 20,
-    },
-  },
-};
 
 export default function Customer() {
   const { setActiveTab, customerDetails, setCustomerDetails } =
@@ -107,7 +64,6 @@ export default function Customer() {
     debouncedUpdate(formValues);
   }, [formValues, debouncedUpdate]);
 
-  // Convert countries object to array and sort by name
   const countriesList = Object.entries(countries)
     .map(([code, country]) => ({
       code,
@@ -132,28 +88,16 @@ export default function Customer() {
   };
 
   return (
-    <motion.div
-      className="relative h-[100vh]"
-      variants={containerVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-    >
-      <motion.div
-        className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-4 border-b"
-        variants={itemVariants}
-      >
+    <div className="relative h-[100vh]">
+      <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-4 border-b">
         <BsBuildings className="text-2xl text-[#0369a1]" />
         <p className="font-bold">Enter Customer Details</p>
-      </motion.div>
+      </div>
 
       <div className="relative">
         <form onSubmit={handleSubmit(onSubmit)} className="relative">
-          <motion.div
-            className="px-16 pt-8 space-y-4 overflow-y-auto overflow-x-hidden h-[90vh]"
-            variants={containerVariants}
-          >
-            <motion.div variants={itemVariants}>
+          <div className="px-16 pt-8 space-y-4 overflow-y-auto overflow-x-hidden h-[90vh]">
+            <div>
               <RequiredLabel>Customer Name</RequiredLabel>
               <input
                 {...register("name")}
@@ -165,9 +109,9 @@ export default function Customer() {
                   {errors.name.message}
                 </p>
               )}
-            </motion.div>
+            </div>
 
-            <motion.div variants={itemVariants}>
+            <div>
               <RequiredLabel>Address</RequiredLabel>
               <textarea
                 rows={3}
@@ -180,12 +124,9 @@ export default function Customer() {
                   {errors.address.message}
                 </p>
               )}
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="grid grid-cols-2 gap-4"
-              variants={itemVariants}
-            >
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <RequiredLabel>City</RequiredLabel>
                 <input
@@ -213,12 +154,9 @@ export default function Customer() {
                   </p>
                 )}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div
-              className="grid grid-cols-2 gap-4"
-              variants={itemVariants}
-            >
+            <div className="grid grid-cols-2 gap-4">
               <div>
                 <RequiredLabel>ZIP Code</RequiredLabel>
                 <input
@@ -259,9 +197,9 @@ export default function Customer() {
                   </p>
                 )}
               </div>
-            </motion.div>
+            </div>
 
-            <motion.div variants={itemVariants}>
+            <div>
               <RequiredLabel>Email</RequiredLabel>
               <input
                 {...register("email")}
@@ -274,9 +212,9 @@ export default function Customer() {
                   {errors.email.message}
                 </p>
               )}
-            </motion.div>
+            </div>
 
-            <motion.div variants={itemVariants}>
+            <div>
               <OptionalLabel>Phone</OptionalLabel>
               <input
                 {...register("phone")}
@@ -288,13 +226,10 @@ export default function Customer() {
                   {errors.phone.message}
                 </p>
               )}
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          <motion.div
-            className="flex justify-end gap-3 sticky bottom-0 bg-white w-full left-0 py-5 border-t px-10"
-            variants={itemVariants}
-          >
+          <div className="flex justify-end gap-3 sticky bottom-0 bg-white w-full left-0 py-5 border-t px-10">
             <Button
               type="button"
               variant="outline"
@@ -307,9 +242,9 @@ export default function Customer() {
               Save and Continue
               <FaArrowRightLong />
             </Button>
-          </motion.div>
+          </div>
         </form>
       </div>
-    </motion.div>
+    </div>
   );
 }

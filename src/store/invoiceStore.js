@@ -1,9 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// Generate a deterministic invoice number
 const generateInvoiceNumber = () => {
-  // Use a fixed seed for consistent generation
   const seed = 10000;
   const baseNumber = Math.floor(seed + Math.random() * 90000);
   return baseNumber.toString().padStart(5, "0");
