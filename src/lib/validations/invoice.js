@@ -10,7 +10,9 @@ export const companyDetailsSchema = z.object({
   companyEmail: z.string().email("Invalid email format"),
   companyPhone: z
     .string()
-    .regex(/^\+?[\d\s-]{10,}$/, "Invalid phone number format"),
+    .regex(/^\+?[\d\s-]{10,}$/, "Invalid phone number format")
+    .optional()
+    .nullable(),
   companyLogoUrl: z.string().optional().nullable(),
   companyWebsite: z.string().optional().nullable(),
 });

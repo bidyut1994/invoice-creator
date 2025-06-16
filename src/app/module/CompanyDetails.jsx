@@ -2,6 +2,7 @@
 import { BsBuildings } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FaArrowRightLong } from "react-icons/fa6";
 import { companyDetailsSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
@@ -51,7 +52,7 @@ export default function CompanyDetails() {
     (values) => {
       const timeoutId = setTimeout(() => {
         setCompanyDetails(values);
-      }, 500);
+      }, 300);
 
       return () => clearTimeout(timeoutId);
     },
@@ -87,15 +88,15 @@ export default function CompanyDetails() {
   };
 
   return (
-    <div className="relative h-[100vh] overflow-y-auto overflow-x-hidden">
-      <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-8 flex items-center gap-2 border-b">
+    <div className="relative h-[100vh] ">
+      <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-2 border-b">
         <BsBuildings className="text-2xl text-[#0369a1]" />
         <p className="font-bold">Enter Company Details</p>
       </div>
 
-      <div className="relative pt-8">
+      <div className="relative ">
         <form onSubmit={handleSubmit(onSubmit)} className="relative">
-          <div className="px-10 space-y-4">
+          <div className="px-16  pt-8 space-y-4 overflow-y-auto overflow-x-hidden h-[90vh]">
             <div>
               <RequiredLabel>Company Name</RequiredLabel>
               <input
@@ -179,7 +180,7 @@ export default function CompanyDetails() {
                   <SelectTrigger className="w-full cursor-pointer">
                     <SelectValue placeholder="Select a country" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="max-h-[300px] overflow-y-auto w-[280px]">
                     {countriesList.map((country) => (
                       <SelectItem key={country.code} value={country.name}>
                         <div className="flex items-center gap-2 cursor-pointer w-full">
@@ -214,7 +215,7 @@ export default function CompanyDetails() {
             </div>
 
             <div>
-              <RequiredLabel>Phone</RequiredLabel>
+              <OptionalLabel>Phone</OptionalLabel>
               <input
                 {...register("companyPhone")}
                 className="w-full p-2 border rounded-md"
@@ -267,6 +268,7 @@ export default function CompanyDetails() {
             </Button>
             <Button type="submit" disabled={!formValues.name}>
               Save and Continue
+              <FaArrowRightLong />
             </Button>
           </div>
         </form>

@@ -34,8 +34,8 @@ export default function Sidebar() {
   const { activeTab, setActiveTab } = useInvoiceStore();
 
   return (
-    <div className="w-28 z-[50] border-r border-[#38bdf8]  h-screen bg-[#e0f2fe] px-auto py-auto">
-      <div className="flex flex-col gap-4 items-center justify-center mt-5">
+    <div className="w-[6vw] pt-5 z-[50] border-r border-[#38bdf8]  h-screen bg-[#e0f2fe] px-auto py-auto">
+      <div className="flex flex-col gap-4 items-center justify-center ">
         <div className="flex flex-col gap-2">
           <img src="/assets/icon.svg" alt="logo" className="w-12 h-12" />
         </div>

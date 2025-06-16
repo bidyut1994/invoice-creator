@@ -5,71 +5,61 @@ import useInvoiceStore from "@/store/invoiceStore";
 import Image from "next/image";
 
 export default function DisplayInvoice() {
-  const { companyDetails } = useInvoiceStore();
+  const { companyDetails, setActiveTab, invoiceDetails } = useInvoiceStore();
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        {/* Company Header with Logo */}
-        <div className="flex justify-between items-start mb-8">
-          <div className="space-y-2">
-            <h1 className="text-2xl font-bold text-gray-900">
-              {companyDetails?.name}
-            </h1>
-            <p className="text-gray-600">{companyDetails?.address}</p>
-            <p className="text-gray-600">
-              {companyDetails?.city}, {companyDetails?.state}{" "}
-              {companyDetails?.zip}
+    <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden">
+      {/* invoice details start */}
+      <div className="bg-white rounded-lg shadow-lg border border-gray-200  min-h-[90vh]  p-10">
+        <div className="border-b border-gray-200 pb-5 flex justify-between  ">
+          <div>
+            <h1 className="text-[32px] font-bold text-gray-500">INVOICE</h1>
+            <p className="text-gray-500 text-sm">
+              Invoice Date: {invoiceDetails?.invoiceDate}
             </p>
-            <p className="text-gray-600">{companyDetails?.country}</p>
+            <p className="text-gray-500 text-sm">
+              Invoice Number: {invoiceDetails?.invoiceNumber}
+            </p>
           </div>
-          {companyDetails?.companyLogoUrl && (
-            <div className="relative w-32 h-32">
-              <Image
-                src={companyDetails?.companyLogoUrl}
-                alt="Company Logo"
-                fill
-                className="object-contain"
-              />
-            </div>
-          )}
-        </div>
+          <div className=" ">
+            <h1 className="text-2xl font-bold text-gray-900 capitalize text-right mb-1">
+              {companyDetails?.name || "Company Name"}
+            </h1>
 
-        {/* Contact Information */}
-        <div className="border-t border-gray-200 pt-6">
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Contact Information
-          </h2>
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <p className="text-sm text-gray-500">Email</p>
-              <p className="text-gray-900">{companyDetails?.companyEmail}</p>
-            </div>
-            <div>
-              <p className="text-sm text-gray-500">Phone</p>
-              <p className="text-gray-900">{companyDetails?.companyPhone}</p>
-            </div>
-            {companyDetails?.companyWebsite && (
-              <div className="col-span-2">
-                <p className="text-sm text-gray-500">Website</p>
-                <a
-                  href={companyDetails?.companyWebsite}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 hover:underline"
-                >
-                  {companyDetails?.companyWebsite}
-                </a>
+            {companyDetails?.city ? (
+              <div className="flex flex-col  ">
+                <p className="text-gray-600 text-right">
+                  {companyDetails?.address || "Company Address"}
+                </p>
+                <p className="text-gray-600 text-right">
+                  {companyDetails?.city || "City"},{" "}
+                  {companyDetails?.state || "State"}-{" "}
+                  {companyDetails?.zip || "Zip"}{" "}
+                  {companyDetails?.country || "Country"}
+                </p>
               </div>
+            ) : (
+              <div>
+                <p className="text-gray-600  text-right capitalize">
+                  Company Address
+                </p>{" "}
+                <p className="text-gray-600 text-right capitalize">
+                  {companyDetails?.city || "City"},{" "}
+                  {companyDetails?.state || "State"}-
+                  {companyDetails?.zip || "100000"}{" "}
+                  {companyDetails?.country || "Country"}
+                </p>
+              </div>
+            )}
+            {companyDetails?.companyEmail && (
+              <p className="text-gray-600 text-right">
+                {companyDetails?.companyEmail}
+              </p>
             )}
           </div>
         </div>
-
-        {/* Additional Information */}
-        <div className="mt-6 text-sm text-gray-500">
-          <p>This information will be displayed on your invoices.</p>
-        </div>
-      </div>
+      </div>{" "}
+      {/* invoice details end*/}
     </div>
   );
 }
