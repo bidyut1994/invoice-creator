@@ -299,9 +299,9 @@ export default function Customer() {
               type="button"
               variant="outline"
               className="text-red-600 border-red-600"
-              onClick={() => reset()}
+              onClick={() => setActiveTab("company-details")}
             >
-              Reset
+              Back
             </Button>
             <Button type="submit" disabled={!formValues.name}>
               Save and Continue

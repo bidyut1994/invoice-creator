@@ -15,7 +15,7 @@ export default function DisplayInvoice() {
           <div>
             <h1 className="text-[32px] font-bold text-gray-500">INVOICE</h1>
             <p className="text-gray-500 text-sm">
-              Invoice Date: {invoiceDetails?.invoiceDate}
+              Invoice Date: {invoiceDetails?.issueDate}
             </p>
             <p className="text-gray-500 text-sm">
               Invoice Number: {invoiceDetails?.invoiceNumber}

@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 // Generate a deterministic invoice number
 const generateInvoiceNumber = () => {
@@ -8,133 +9,135 @@ const generateInvoiceNumber = () => {
   return baseNumber.toString().padStart(5, "0");
 };
 
-const useInvoiceStore = create((set) => ({
-  activeTab: "company-details",
-  setActiveTab: (tab) => set({ activeTab: tab }),
+const getLocalStorage = (key, defaultValue) => {
+  if (typeof window !== "undefined") {
+    const stored = localStorage.getItem(key);
+    return stored ? JSON.parse(stored) : defaultValue;
+  }
+  return defaultValue;
+};
 
-  color: "#0369a1",
-  setColor: (color) => set({ color }),
-
-  // Company Details
-  companyDetails: {
-    ...JSON.parse(
-      localStorage.getItem("companyDetails") ||
-        JSON.stringify({
-          name: "",
-          address: "",
-          city: "",
-          state: "",
-          zip: "",
-          country: "",
-          companyLogoUrl: null,
-          companyEmail: "",
-          companyPhone: "",
-          companyWebsite: null,
-        })
-    ),
-  },
-  setCompanyDetails: (details) =>
-    set((state) => ({
-      companyDetails: { ...state.companyDetails, ...details },
-    })),
-
-  // Customer Details
-  customerDetails: {
-    name: "",
-    email: "",
-    address: "",
-    city: "",
-    state: "",
-    zip: "",
-    country: "",
-    phone: "",
-  },
-  setCustomerDetails: (details) =>
-    set((state) => ({
-      customerDetails: { ...state.customerDetails, ...details },
-    })),
-
-  // Invoice Details
-  invoiceDetails: {
-    // invoiceNumber: `#1${generateInvoiceNumber()}`,
-    invoiceNumber: `#10009`,
-    invoiceDate: new Date()
-      .toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-      })
-      .replace(/\//g, "-"),
-    dueDate: "",
-    notes: "",
-    terms: "",
-  },
-  setInvoiceDetails: (details) =>
-    set((state) => ({
-      invoiceDetails: { ...state.invoiceDetails, ...details },
-    })),
-
-  // Items
-  items: [],
-  setItems: (items) => set({ items }),
-
-  // Tax
-  tax: {
-    rate: 0,
-    amount: 0,
-  },
-  setTax: (tax) => set({ tax }),
-
-  // Total
-  total: 0,
-  setTotal: (total) => set({ total }),
-
-  // Reset all data
-  resetAll: () =>
-    set({
+const useInvoiceStore = create(
+  persist(
+    (set) => ({
       activeTab: "company-details",
-      companyDetails: {
+      setActiveTab: (tab) => set({ activeTab: tab }),
+
+      color: "#0369a1",
+      setColor: (color) => set({ color }),
+
+      companyDetails: getLocalStorage("companyDetails", {
         name: "",
+        email: "",
+        phone: "",
         address: "",
         city: "",
         state: "",
         zip: "",
         country: "",
-        companyEmail: "",
-        companyPhone: "",
-        companyWebsite: "",
-        companyLogoUrl: "",
-      },
+        website: "",
+        logoUrl: "",
+      }),
+
+      setCompanyDetails: (details) =>
+        set((state) => ({
+          companyDetails: { ...state.companyDetails, ...details },
+        })),
+
       customerDetails: {
         name: "",
         email: "",
+        phone: "",
         address: "",
         city: "",
         state: "",
         zip: "",
         country: "",
-        phone: "",
       },
+
+      setCustomerDetails: (details) =>
+        set((state) => ({
+          customerDetails: { ...state.customerDetails, ...details },
+        })),
+
       invoiceDetails: {
-        invoiceNumber: `#1${generateInvoiceNumber()}`,
-        invoiceDate: new Date()
-          .toLocaleDateString("en-GB", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-          })
-          .replace(/\//g, "-"),
-        dueDate: "",
-        notes: "",
-        terms: "",
+        invoiceNumber: "#10009",
+        issueDate: new Date().toLocaleDateString("en-GB"),
       },
+
+      setInvoiceDetails: (details) =>
+        set((state) => ({
+          invoiceDetails: { ...state.invoiceDetails, ...details },
+        })),
+
       items: [],
-      tax: {
-        rate: 0,
-        amount: 0,
-      },
+      setItems: (items) => set({ items }),
+
+      subtotal: 0,
+      setSubtotal: (subtotal) => set({ subtotal }),
+
+      taxRate: 0,
+      setTaxRate: (taxRate) => set({ taxRate }),
+
+      taxAmount: 0,
+      setTaxAmount: (taxAmount) => set({ taxAmount }),
+
       total: 0,
+      setTotal: (total) => set({ total }),
+
+      currency: "USD",
+      setCurrency: (currency) => set({ currency }),
+
+      status: "draft",
+      setStatus: (status) => set({ status }),
+
+      resetStore: () =>
+        set({
+          activeTab: "company-details",
+          companyDetails: {
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+            city: "",
+            state: "",
+            zip: "",
+            country: "",
+            website: "",
+            logoUrl: "",
+          },
+          customerDetails: {
+            name: "",
+            email: "",
+            phone: "",
+            address: "",
+            city: "",
+            state: "",
+            zip: "",
+            country: "",
+          },
+          invoiceDetails: {
+            invoiceNumber: "",
+            issueDate: "",
+            dueDate: "",
+            notes: "",
+            terms: "",
+          },
+          items: [],
+          subtotal: 0,
+          taxRate: 0,
+          taxAmount: 0,
+          total: 0,
+          currency: "USD",
+          status: "draft",
+        }),
     }),
-}));
+    {
+      name: "company-details-storage",
+      partialize: (state) => ({ companyDetails: state.companyDetails }),
+      skipHydration: true,
+    }
+  )
+);
 
 export default useInvoiceStore;

@@ -12,7 +12,7 @@ import DisplayInvoice from "./module/DisplayInvoice";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const { activeTab, companyDetails } = useInvoiceStore();
+  const { activeTab } = useInvoiceStore();
 
   return (
     <div className="flex fixed overflow-y-auto overflow-x-hidden">
