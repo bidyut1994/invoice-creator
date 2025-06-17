@@ -12,6 +12,7 @@ export default function DisplayInvoice() {
     invoiceDetails,
     items,
   } = useInvoiceStore();
+  console.log("items--from display-invoice ", items);
 
   return (
     <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden">
