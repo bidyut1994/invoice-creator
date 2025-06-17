@@ -6,8 +6,10 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { companyDetailsSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
-import { useEffect, useCallback, useState } from "react";
+import { useEffect, useCallback, useMemo, useRef } from "react";
 import { Textarea } from "@/components/ui/textarea";
+
+import { useWatch } from "react-hook-form";
 import {
   Select,
   SelectContent,
@@ -39,56 +41,64 @@ export default function CompanyDetails() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
-    values,
     setValue,
+    control,
   } = useForm({
     resolver: zodResolver(companyDetailsSchema),
     defaultValues: companyDetails,
   });
+  const formValues = useWatch({ control });
 
-  const formValues = watch();
+  // Memoize countries list
+  const countriesList = useMemo(() => {
+    return Object.entries(countries)
+      .map(([code, country]) => ({
+        code,
+        name: country.name,
+        emoji: country.emoji,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, []);
 
+  // Debounced update with stable ref
+  const debounceRef = useRef();
   const debouncedUpdate = useCallback(
     (values) => {
-      const timeoutId = setTimeout(() => {
+      if (JSON.stringify(companyDetails) === JSON.stringify(values)) return;
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+      debounceRef.current = setTimeout(() => {
         setCompanyDetails(values);
-      }, 150);
-
-      return () => clearTimeout(timeoutId);
+      }, 200);
     },
-    [setCompanyDetails]
+    [setCompanyDetails, companyDetails]
   );
 
   useEffect(() => {
     debouncedUpdate(formValues);
+    return () => {
+      if (debounceRef.current) clearTimeout(debounceRef.current);
+    };
   }, [formValues, debouncedUpdate]);
 
-  const countriesList = Object.entries(countries)
-    .map(([code, country]) => ({
-      code,
-      name: country.name,
-      emoji: country.emoji,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  const onSubmit = (data) => {
-    setCompanyDetails(data);
-    console.log(" company details data-------", data);
-    if (
-      data.name &&
-      data.address &&
-      data.city &&
-      data.state &&
-      data.zip &&
-      data.country &&
-      data.companyEmail &&
-      data.companyPhone
-    ) {
-      localStorage.setItem("companyDetails", JSON.stringify(data));
-      setActiveTab("customer");
-    }
-  };
+  const onSubmit = useCallback(
+    (data) => {
+      setCompanyDetails(data);
+      if (
+        data.name &&
+        data.address &&
+        data.city &&
+        data.state &&
+        data.zip &&
+        data.country &&
+        data.companyEmail &&
+        data.companyPhone
+      ) {
+        localStorage.setItem("companyDetails", JSON.stringify(data));
+        setActiveTab("customer");
+      }
+    },
+    [setCompanyDetails, setActiveTab]
+  );
 
   const handleReset = useCallback(() => {
     reset();
