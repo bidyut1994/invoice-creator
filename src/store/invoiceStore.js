@@ -77,6 +77,9 @@ const useInvoiceStore = create(
       taxRate: 0,
       setTaxRate: (taxRate) => set({ taxRate }),
 
+      discountRate: 0,
+      setDiscountRate: (discountRate) => set({ discountRate }),
+
       taxAmount: 0,
       setTaxAmount: (taxAmount) => set({ taxAmount }),
 
@@ -124,6 +127,7 @@ const useInvoiceStore = create(
           items: [],
           subtotal: 0,
           taxRate: 0,
+          discountRate: 0,
           taxAmount: 0,
           total: 0,
           currency: "USD",

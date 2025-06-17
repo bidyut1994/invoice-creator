@@ -19,7 +19,7 @@ const productSchema = z.object({
 });
 
 export default function ProductDetails() {
-  const { items, setItems, setActiveTab } = useInvoiceStore();
+  const { items, setItems, setActiveTab, setSubtotal } = useInvoiceStore();
   const {
     control,
     register,
@@ -42,17 +42,6 @@ export default function ProductDetails() {
   });
 
   const products = watch("products");
-
-  const handleUpdateItems = useCallback(() => {
-    setItems(products);
-  }, [products, setItems]);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      handleUpdateItems();
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [handleUpdateItems]);
 
   const onSubmit = (data) => {
     setItems(data.products);
@@ -81,6 +70,18 @@ export default function ProductDetails() {
       const price = Number(product.price) || 0;
       return total + quantity * price;
     }, 0) || 0;
+
+  const handleUpdateItems = useCallback(() => {
+    setItems(products);
+    setSubtotal(grandTotal);
+  }, [products, setItems, grandTotal, setSubtotal]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      handleUpdateItems();
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [handleUpdateItems]);
 
   return (
     <div className="relative h-[100vh]">
@@ -183,8 +184,10 @@ export default function ProductDetails() {
           </div>
           <div className="flex justify-between gap-3 sticky bottom-0 bg-white w-full left-0 py-5 border-t px-10">
             <div className="flex items-center gap-2 text-xl font-bold">
-              <span>Grand Total:</span>
-              <span className="text-green-700">{grandTotal || 0}</span>
+              <span>Subtotal:</span>
+              <span className="text-green-700">
+                {grandTotal > 0 ? `$${grandTotal?.toFixed(2)}` : "$0.00"}
+              </span>
             </div>
             <div className="flex items-center gap-2">
               <Button

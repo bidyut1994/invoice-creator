@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import useInvoiceStore from "@/store/invoiceStore";
 import Image from "next/image";
 
@@ -11,8 +11,18 @@ export default function DisplayInvoice() {
     setActiveTab,
     invoiceDetails,
     items,
+    discountRate,
+    taxRate,
+    subtotal,
+    total,
   } = useInvoiceStore();
   console.log("items--from display-invoice ", items);
+
+  const computedTotal = useMemo(() => {
+    const tax = (subtotal * (Number(taxRate) || 0)) / 100;
+    const discount = (subtotal * (Number(discountRate) || 0)) / 100;
+    return subtotal + tax - discount;
+  }, [subtotal, taxRate, discountRate]);
 
   return (
     <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden">
@@ -150,7 +160,32 @@ export default function DisplayInvoice() {
             <div className="text-center py-10 text-xs w-full bg-gray-50">
               No items added
             </div>
-          )}{" "}
+          )}
+
+          {/* Summary Section */}
+          <div className="grid grid-cols-2 gap-y-2 mt-16 pr-4 w-full max-w-md ml-auto">
+            <div className="text-sm font-semibold text-right">Subtotal:</div>
+            <div className="text-sm text-right">
+              {subtotal.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+            <div className="text-sm font-semibold text-right">Tax Rate:</div>
+            <div className="text-sm text-right">{taxRate}%</div>
+            <div className="text-sm font-semibold text-right">
+              Discount Rate:
+            </div>
+            <div className="text-sm text-right">{discountRate}%</div>
+            <div className="col-span-2 border-t pt-2 mt-2"></div>
+            <div className="text-lg font-bold text-right">Total:</div>
+            <div className="text-xl font-bold text-right">
+              {computedTotal.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </div>
+          </div>
         </div>
       </div>{" "}
       {/* invoice details end*/}
