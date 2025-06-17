@@ -43,14 +43,14 @@ const useInvoiceStore = create(
         })),
 
       customerDetails: {
-        name: "",
-        email: "",
-        phone: "",
-        address: "",
-        city: "",
-        state: "",
-        zip: "",
-        country: "",
+        customerName: "",
+        customerEmail: "",
+        customerPhone: "",
+        customerAddress: "",
+        customerCity: "",
+        customerState: "",
+        customerZip: "",
+        customerCountry: "",
       },
 
       setCustomerDetails: (details) =>

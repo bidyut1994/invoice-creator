@@ -40,6 +40,7 @@ export default function CompanyDetails() {
     formState: { errors },
     reset,
     watch,
+    values,
     setValue,
   } = useForm({
     resolver: zodResolver(companyDetailsSchema),
@@ -73,7 +74,7 @@ export default function CompanyDetails() {
 
   const onSubmit = (data) => {
     setCompanyDetails(data);
-
+    console.log(" company details data-------", data);
     if (
       data.name &&
       data.address &&
@@ -88,6 +89,10 @@ export default function CompanyDetails() {
       setActiveTab("customer");
     }
   };
+
+  const handleReset = useCallback(() => {
+    reset();
+  }, [reset]);
 
   return (
     <div className="relative h-[100vh] ">
@@ -127,7 +132,7 @@ export default function CompanyDetails() {
                 </p>
               )}
             </div>
-
+            {console.log("company-errors", errors)}
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <RequiredLabel>City</RequiredLabel>
@@ -264,7 +269,7 @@ export default function CompanyDetails() {
               type="button"
               variant="outline"
               className="text-red-600 border-red-600"
-              onClick={() => reset()}
+              onClick={handleReset}
             >
               Reset
             </Button>

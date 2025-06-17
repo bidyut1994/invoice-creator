@@ -62,20 +62,23 @@ export default function DisplayInvoice() {
         <div className="mt-5">
           <p className="text-gray-500 text-sm pb-2">Bill To : </p>
           <p className="text-gray-700 text-sm font-bold capitalize">
-            {customerDetails?.name || "Customer Details"}
+            {customerDetails?.customerName || "Customer Details"}
           </p>
-          {customerDetails?.address && (
+          {customerDetails?.customerAddress && (
             <div>
               <p className="text-gray-700 text-sm  not-only: capitalize">
-                {customerDetails?.address || "Customer Address"}{" "}
-                {customerDetails?.city && customerDetails?.city},{" "}
-                {customerDetails?.state && customerDetails?.state}-
-                {customerDetails?.zip && customerDetails?.zip}{" "}
-                {customerDetails?.country && customerDetails?.country}
+                {customerDetails?.customerAddress || "Customer Address"}{" "}
+                {customerDetails?.customerCity && customerDetails?.customerCity}
+                ,{" "}
+                {customerDetails?.customerState &&
+                  customerDetails?.customerState}
+                -{customerDetails?.customerZip && customerDetails?.customerZip}{" "}
+                {customerDetails?.customerCountry &&
+                  customerDetails?.customerCountry}
               </p>
-              {customerDetails?.email && (
+              {customerDetails?.customerEmail && (
                 <p className="text-gray-700 text-sm    ">
-                  {customerDetails?.email}
+                  {customerDetails?.customerEmail}
                 </p>
               )}
             </div>

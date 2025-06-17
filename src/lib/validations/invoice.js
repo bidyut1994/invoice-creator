@@ -22,13 +22,11 @@ export const customerSchema = z.object({
     .string()
     .min(2, "Customer name must be at least 2 characters"),
   customerEmail: z.string().email("Invalid email format"),
-  customerPhone: z
-    .string()
-    .regex(/^\+?[\d\s-]{10,}$/, "Invalid phone number format"),
+  customerPhone: z.string().optional().nullable(),
   customerAddress: z.string().min(5, "Address must be at least 5 characters"),
   customerCity: z.string().min(2, "City must be at least 2 characters"),
   customerState: z.string().min(2, "State must be at least 2 characters"),
-  customerZip: z.string().regex(/^\d{5}(-\d{4})?$/, "Invalid ZIP code format"),
+  customerZip: z.string().regex(/^\d{6}(-\d{4})?$/, "Invalid ZIP code format"),
   customerCountry: z.string().min(2, "Country must be at least 2 characters"),
 });
 

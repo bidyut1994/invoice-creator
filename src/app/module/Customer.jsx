@@ -6,8 +6,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { customerSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
-import { useEffect, useCallback } from "react";
-
+import { useEffect, useCallback, useMemo } from "react";
 import { FaBuildingUser } from "react-icons/fa6";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -43,6 +42,7 @@ export default function Customer() {
     formState: { errors },
     reset,
     watch,
+    values,
     setValue,
   } = useForm({
     resolver: zodResolver(customerSchema),
@@ -63,31 +63,47 @@ export default function Customer() {
   );
 
   useEffect(() => {
-    debouncedUpdate(formValues);
+    const cleanup = debouncedUpdate(formValues);
+    return cleanup;
   }, [formValues, debouncedUpdate]);
 
-  const countriesList = Object.entries(countries)
-    .map(([code, country]) => ({
-      code,
-      name: country.name,
-      emoji: country.emoji,
-    }))
-    .sort((a, b) => a.name.localeCompare(b.name));
+  const countriesList = useMemo(() => {
+    return Object.entries(countries)
+      .map(([code, country]) => ({
+        code,
+        name: country.name,
+        emoji: country.emoji,
+      }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+  }, []);
 
   const onSubmit = (data) => {
+    console.log("customer data-------", data);
     setCustomerDetails(data);
+
     if (
-      data.name &&
-      data.email &&
-      data.address &&
-      data.city &&
-      data.state &&
-      data.zip &&
-      data.country
+      data.customerName &&
+      data.customerEmail &&
+      data.customerAddress &&
+      data.customerCity &&
+      data.customerState &&
+      data.customerZip &&
+      data.customerCountry
     ) {
-      setActiveTab("invoice");
+      setActiveTab("product-details");
     }
   };
+
+  const handleBack = useCallback(() => {
+    setActiveTab("company-details");
+  }, [setActiveTab]);
+
+  const handleCountryChange = useCallback(
+    (value) => {
+      setValue("customerCountry", value);
+    },
+    [setValue]
+  );
 
   return (
     <div className="relative h-[100vh]">
@@ -102,13 +118,13 @@ export default function Customer() {
             <div>
               <RequiredLabel>Customer Name</RequiredLabel>
               <input
-                {...register("name")}
+                {...register("customerName")}
                 className="w-full p-2 border rounded-md"
                 placeholder="Enter customer name"
               />
-              {errors.name && (
+              {errors.customerName && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.name.message}
+                  {errors.customerName.message}
                 </p>
               )}
             </div>
@@ -117,28 +133,27 @@ export default function Customer() {
               <RequiredLabel>Address</RequiredLabel>
               <textarea
                 rows={3}
-                {...register("address")}
+                {...register("customerAddress")}
                 className="w-full p-2 border rounded-md"
                 placeholder="Enter address"
               />
-              {errors.address && (
+              {errors.customerAddress && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.address.message}
+                  {errors.customerAddress.message}
                 </p>
               )}
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <RequiredLabel>City</RequiredLabel>
                 <input
-                  {...register("city")}
+                  {...register("customerCity")}
                   className="w-full p-2 border rounded-md"
                   placeholder="Enter city"
                 />
-                {errors.city && (
+                {errors.customerCity && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.city.message}
+                    {errors.customerCity.message}
                   </p>
                 )}
               </div>
@@ -146,13 +161,13 @@ export default function Customer() {
               <div>
                 <RequiredLabel>State</RequiredLabel>
                 <input
-                  {...register("state")}
+                  {...register("customerState")}
                   className="w-full p-2 border rounded-md"
                   placeholder="Enter state"
                 />
-                {errors.state && (
+                {errors.customerState && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.state.message}
+                    {errors.customerState.message}
                   </p>
                 )}
               </div>
@@ -162,13 +177,13 @@ export default function Customer() {
               <div>
                 <RequiredLabel>ZIP Code</RequiredLabel>
                 <input
-                  {...register("zip")}
+                  {...register("customerZip")}
                   className="w-full p-2 border rounded-md"
                   placeholder="Enter ZIP code"
                 />
-                {errors.zip && (
+                {errors.customerZip && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.zip.message}
+                    {errors.customerZip.message}
                   </p>
                 )}
               </div>
@@ -176,8 +191,8 @@ export default function Customer() {
               <div>
                 <RequiredLabel>Country</RequiredLabel>
                 <Select
-                  onValueChange={(value) => setValue("country", value)}
-                  defaultValue={customerDetails.country}
+                  onValueChange={handleCountryChange}
+                  defaultValue={customerDetails.customerCountry}
                 >
                   <SelectTrigger className="w-full cursor-pointer">
                     <SelectValue placeholder="Select a country" />
@@ -193,9 +208,9 @@ export default function Customer() {
                     ))}
                   </SelectContent>
                 </Select>
-                {errors.country && (
+                {errors.customerCountry && (
                   <p className="text-red-500 text-sm mt-1">
-                    {errors.country.message}
+                    {errors.customerCountry.message}
                   </p>
                 )}
               </div>
@@ -204,28 +219,28 @@ export default function Customer() {
             <div>
               <RequiredLabel>Email</RequiredLabel>
               <input
-                {...register("email")}
+                {...register("customerEmail")}
                 type="email"
                 className="w-full p-2 border rounded-md"
                 placeholder="Enter email"
               />
-              {errors.email && (
+              {errors.customerEmail && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.email.message}
+                  {errors.customerEmail.message}
                 </p>
               )}
             </div>
 
-            <div>
+            <div className="pb-64">
               <OptionalLabel>Phone</OptionalLabel>
               <input
-                {...register("phone")}
+                {...register("customerPhone")}
                 className="w-full p-2 border rounded-md"
                 placeholder="Enter phone number"
               />
-              {errors.phone && (
+              {errors.customerPhone && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.phone.message}
+                  {errors.customerPhone.message}
                 </p>
               )}
             </div>
@@ -236,11 +251,11 @@ export default function Customer() {
               type="button"
               variant="outline"
               className="text-red-600 border-red-600"
-              onClick={() => setActiveTab("company-details")}
+              onClick={handleBack}
             >
               Back
             </Button>
-            <Button type="submit" disabled={!formValues.name}>
+            <Button type="submit" disabled={!formValues.customerName}>
               Save and Continue
               <FaArrowRightLong />
             </Button>
