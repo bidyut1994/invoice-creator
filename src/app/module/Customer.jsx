@@ -7,6 +7,8 @@ import { customerSchema } from "@/lib/validations/invoice";
 import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
 import { useEffect, useCallback } from "react";
+
+import { FaBuildingUser } from "react-icons/fa6";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
@@ -90,7 +92,7 @@ export default function Customer() {
   return (
     <div className="relative h-[100vh]">
       <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-16 flex items-center gap-4 border-b">
-        <BsBuildings className="text-2xl text-[#0369a1]" />
+        <FaBuildingUser className="text-2xl text-[#0369a1]" />
         <p className="font-bold">Enter Customer Details</p>
       </div>
 

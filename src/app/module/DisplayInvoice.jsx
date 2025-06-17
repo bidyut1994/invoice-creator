@@ -5,7 +5,8 @@ import useInvoiceStore from "@/store/invoiceStore";
 import Image from "next/image";
 
 export default function DisplayInvoice() {
-  const { companyDetails, setActiveTab, invoiceDetails } = useInvoiceStore();
+  const { companyDetails, customerDetails, setActiveTab, invoiceDetails } =
+    useInvoiceStore();
 
   return (
     <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden">
@@ -57,6 +58,28 @@ export default function DisplayInvoice() {
               </p>
             )}
           </div>
+        </div>
+        <div className="mt-5">
+          <p className="text-gray-500 text-sm pb-2">Bill To : </p>
+          <p className="text-gray-700 text-sm font-bold capitalize">
+            {customerDetails?.name || "Customer Details"}
+          </p>
+          {customerDetails?.address && (
+            <div>
+              <p className="text-gray-700 text-sm  not-only: capitalize">
+                {customerDetails?.address || "Customer Address"}{" "}
+                {customerDetails?.city && customerDetails?.city},{" "}
+                {customerDetails?.state && customerDetails?.state}-
+                {customerDetails?.zip && customerDetails?.zip}{" "}
+                {customerDetails?.country && customerDetails?.country}
+              </p>
+              {customerDetails?.email && (
+                <p className="text-gray-700 text-sm    ">
+                  {customerDetails?.email}
+                </p>
+              )}
+            </div>
+          )}
         </div>
       </div>{" "}
       {/* invoice details end*/}

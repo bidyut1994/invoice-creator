@@ -52,7 +52,7 @@ export default function CompanyDetails() {
     (values) => {
       const timeoutId = setTimeout(() => {
         setCompanyDetails(values);
-      }, 300);
+      }, 150);
 
       return () => clearTimeout(timeoutId);
     },

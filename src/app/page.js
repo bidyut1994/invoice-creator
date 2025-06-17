@@ -19,7 +19,7 @@ export default function Home() {
       <div className=" ">
         <Sidebar />
       </div>
-      <div className="ml-[6vw] w-[40vw] h-screen   border-r border-gray-200 fixed  top-0 ">
+      <div className="ml-[6vw] w-[40vw] h-screen  z-[10] border-r border-gray-200 fixed  top-0 ">
         {activeTab === "company-details" && (
           <motion.div
             initial={{ opacity: 0, x: 100 }}
