@@ -1,6 +1,5 @@
 "use client";
-import { BsBuildings } from "react-icons/bs";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { customerSchema } from "@/lib/validations/invoice";
@@ -8,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import useInvoiceStore from "@/store/invoiceStore";
 import { useEffect, useCallback, useMemo } from "react";
 import { FaBuildingUser } from "react-icons/fa6";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -41,32 +39,17 @@ export default function Customer() {
     handleSubmit,
     formState: { errors },
     reset,
-    watch,
-    values,
+    control,
     setValue,
   } = useForm({
     resolver: zodResolver(customerSchema),
     defaultValues: customerDetails,
   });
 
-  const formValues = watch();
+  // useWatch for form values
+  const formValues = useWatch({ control });
 
-  const debouncedUpdate = useCallback(
-    (values) => {
-      const timeoutId = setTimeout(() => {
-        setCustomerDetails(values);
-      }, 300);
-
-      return () => clearTimeout(timeoutId);
-    },
-    [setCustomerDetails]
-  );
-
-  useEffect(() => {
-    const cleanup = debouncedUpdate(formValues);
-    return cleanup;
-  }, [formValues, debouncedUpdate]);
-
+  // Memoize countries list
   const countriesList = useMemo(() => {
     return Object.entries(countries)
       .map(([code, country]) => ({
@@ -77,22 +60,39 @@ export default function Customer() {
       .sort((a, b) => a.name.localeCompare(b.name));
   }, []);
 
-  const onSubmit = (data) => {
-    console.log("customer data-------", data);
-    setCustomerDetails(data);
+  // Debounced update
+  const debouncedUpdate = useCallback(
+    (values) => {
+      const timeoutId = setTimeout(() => {
+        setCustomerDetails(values);
+      }, 300);
+      return () => clearTimeout(timeoutId);
+    },
+    [setCustomerDetails]
+  );
 
-    if (
-      data.customerName &&
-      data.customerEmail &&
-      data.customerAddress &&
-      data.customerCity &&
-      data.customerState &&
-      data.customerZip &&
-      data.customerCountry
-    ) {
-      setActiveTab("product-details");
-    }
-  };
+  useEffect(() => {
+    const cleanup = debouncedUpdate(formValues);
+    return cleanup;
+  }, [formValues, debouncedUpdate]);
+
+  const onSubmit = useCallback(
+    (data) => {
+      setCustomerDetails(data);
+      if (
+        data.customerName &&
+        data.customerEmail &&
+        data.customerAddress &&
+        data.customerCity &&
+        data.customerState &&
+        data.customerZip &&
+        data.customerCountry
+      ) {
+        setActiveTab("product-details");
+      }
+    },
+    [setCustomerDetails, setActiveTab]
+  );
 
   const handleBack = useCallback(() => {
     setActiveTab("company-details");
@@ -116,6 +116,7 @@ export default function Customer() {
         <form onSubmit={handleSubmit(onSubmit)} className="relative">
           <div className="px-16 pt-8 space-y-4 overflow-y-auto overflow-x-hidden h-[90vh]">
             <div>
+              {console.log("customer-errors", errors)}
               <RequiredLabel>Customer Name</RequiredLabel>
               <input
                 {...register("customerName")}
@@ -128,7 +129,6 @@ export default function Customer() {
                 </p>
               )}
             </div>
-
             <div>
               <RequiredLabel>Address</RequiredLabel>
               <textarea
@@ -157,7 +157,6 @@ export default function Customer() {
                   </p>
                 )}
               </div>
-
               <div>
                 <RequiredLabel>State</RequiredLabel>
                 <input
@@ -172,7 +171,6 @@ export default function Customer() {
                 )}
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <RequiredLabel>ZIP Code</RequiredLabel>
@@ -187,7 +185,6 @@ export default function Customer() {
                   </p>
                 )}
               </div>
-
               <div>
                 <RequiredLabel>Country</RequiredLabel>
                 <Select
@@ -215,7 +212,6 @@ export default function Customer() {
                 )}
               </div>
             </div>
-
             <div>
               <RequiredLabel>Email</RequiredLabel>
               <input
@@ -230,7 +226,6 @@ export default function Customer() {
                 </p>
               )}
             </div>
-
             <div className="pb-64">
               <OptionalLabel>Phone</OptionalLabel>
               <input
@@ -245,7 +240,6 @@ export default function Customer() {
               )}
             </div>
           </div>
-
           <div className="flex justify-end gap-3 sticky bottom-0 bg-white w-full left-0 py-5 border-t px-10">
             <Button
               type="button"
