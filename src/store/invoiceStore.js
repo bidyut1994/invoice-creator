@@ -86,12 +86,6 @@ const useInvoiceStore = create(
       total: 0,
       setTotal: (total) => set({ total }),
 
-      currency: "USD",
-      setCurrency: (currency) => set({ currency }),
-
-      status: "draft",
-      setStatus: (status) => set({ status }),
-
       resetStore: () =>
         set({
           activeTab: "company-details",

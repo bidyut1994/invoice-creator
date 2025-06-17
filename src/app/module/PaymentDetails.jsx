@@ -84,6 +84,10 @@ export default function PaymentDetails() {
               currency: "USD",
             })}
           </div>
+
+
+
+          
         </div>
       </div>
     </div>

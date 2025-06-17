@@ -1,8 +1,10 @@
 "use client";
 
-import React, { useMemo } from "react";
+import React, { useMemo, useRef } from "react";
 import useInvoiceStore from "@/store/invoiceStore";
 import Image from "next/image";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 export default function DisplayInvoice() {
   const {
@@ -24,10 +26,51 @@ export default function DisplayInvoice() {
     return subtotal + tax - discount;
   }, [subtotal, taxRate, discountRate]);
 
+  const invoiceRef = useRef();
+
+  const handleDownloadPDF = async () => {
+    const input = invoiceRef.current;
+    if (!input) return;
+    const a4Width = 595.28; // pt
+    const a4Height = 841.89; // pt
+    const canvas = await html2canvas(input, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+    const imgWidth = a4Width;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    const pdf = new jsPDF({
+      orientation: "portrait",
+      unit: "pt",
+      format: "a4",
+    });
+    let position = 0;
+    // If content is longer than one page, add pages
+    if (imgHeight < a4Height) {
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    } else {
+      let heightLeft = imgHeight;
+      while (heightLeft > 0) {
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= a4Height;
+        position -= a4Height;
+        if (heightLeft > 0) pdf.addPage();
+      }
+    }
+    pdf.save("invoice.pdf");
+  };
+
   return (
-    <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden">
+    <div className="py-6 px-20  h-[100vh] overflow-y-auto overflow-x-hidden relative">
+      <button
+        onClick={handleDownloadPDF}
+        className="mb-4 px-4 py-2 bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700 absolute top-0 right-0 z-10"
+      >
+        Download PDF
+      </button>
       {/* invoice details start */}
-      <div className="bg-white rounded-lg shadow-lg border border-gray-200  min-h-[90vh]  p-10">
+      <div
+        ref={invoiceRef}
+        className="bg-white rounded-lg shadow-lg border border-gray-200  min-h-[90vh]  p-10"
+      >
         <div className="border-b border-gray-200 pb-5 flex justify-between  ">
           <div>
             <h1 className="text-[32px] font-bold text-gray-500">INVOICE</h1>
