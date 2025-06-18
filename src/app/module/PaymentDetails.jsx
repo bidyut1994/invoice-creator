@@ -33,14 +33,18 @@ export default function PaymentDetails() {
   // Handlers
   const handleTaxRateChange = useCallback(
     (e) => {
-      setTaxRate(Number(e.target.value));
+      let value = Number(e.target.value);
+      if (value > 20) value = 20;
+      setTaxRate(value);
     },
     [setTaxRate]
   );
 
   const handleDiscountRateChange = useCallback(
     (e) => {
-      setDiscountRate(Number(e.target.value));
+      let value = Number(e.target.value);
+      if (value > 20) value = 20;
+      setDiscountRate(value);
     },
     [setDiscountRate]
   );
@@ -92,7 +96,8 @@ export default function PaymentDetails() {
               type="number"
               min={0}
               max={100}
-              value={taxRate || ""}
+              value={taxRate}
+              defaultValue={0}
               onChange={handleTaxRateChange}
               className="border rounded-md p-2 w-24 text-right"
             />
@@ -103,7 +108,8 @@ export default function PaymentDetails() {
               type="number"
               min={0}
               max={100}
-              value={discountRate || ""}
+              value={discountRate}
+              defaultValue={0}
               onChange={handleDiscountRateChange}
               className="border rounded-md p-2 w-24 text-right"
             />

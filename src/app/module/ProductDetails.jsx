@@ -187,6 +187,7 @@ export default function ProductDetails() {
               type="button"
               onClick={() => append({ name: "", quantity: 1, price: 1 })}
               className=" flex items-center gap-2 mb-64"
+              disabled={items?.length >= 8}
             >
               <FaPlus /> Add Product
             </Button>

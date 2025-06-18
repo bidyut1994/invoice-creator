@@ -134,7 +134,7 @@ function ViewInvoice() {
         <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
           <div
             ref={invoiceRef}
-            className="bg-[#fff] min-h-[850px] p-20 relative"
+            className="bg-[#fff] min-h-[850px] p-16 relative"
           >
             <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
               <div>
@@ -347,7 +347,7 @@ function ViewInvoice() {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-20 ">
+              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-16 ">
                 <div className="text-[12px] font-semibold text-right">
                   Subtotal:
                 </div>
