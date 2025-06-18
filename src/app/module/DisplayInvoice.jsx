@@ -106,202 +106,262 @@ function ViewInvoice() {
 
   return (
     <div>
-      <div className="py-10 px-8 md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-white">
+      <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
         <button
           onClick={handleDownloadPDF}
           className="mb-4 px-4 py-2 bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700 absolute top-0 right-0 z-10"
         >
           Download PDF
         </button>
+        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
+          <div
+            ref={invoiceRef}
+            className="bg-[#fff] min-h-[850px] p-20 relative"
+          >
+            <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
+              <div>
+                <p className="text-[32px] font-bold text-gray-500 mb-1">
+                  INVOICE
+                </p>
+                <p className="text-gray-500 text-[12px] mb-0">
+                  Invoice Date: {invoiceDetails?.issueDate}
+                </p>
+                <p className="text-gray-500 text-[12px]  ">
+                  Invoice Number: {invoiceNumber}
+                </p>
+              </div>
+              <div className=" ">
+                <h1 className="text-[20px] font-bold text-gray-900 capitalize text-right mt-1 mb-1 bg-white">
+                  {companyDetails?.name || "Company Name"}
+                </h1>
 
-        <div
-          ref={invoiceRef}
-          className="bg-[#fff]rounded-lg shadow-lg border border-[#e0e0e0]  min-h-[90vh] p-20"
-        >
-          <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
-            <div>
-              <p className="text-[32px] font-bold text-gray-500 mb-1">
-                INVOICE
-              </p>
-              <p className="text-gray-500 text-[14px] mb-0">
-                Invoice Date: {invoiceDetails?.issueDate}
-              </p>
-              <p className="text-gray-500 text-[14px]  ">
-                Invoice Number: {invoiceNumber}
-              </p>
+                {companyDetails?.city ? (
+                  <div className="flex flex-col  text-[12px]">
+                    <p className="text-gray-600 text-right capitalize mb-0">
+                      {companyDetails?.address || "Company Address"}
+                    </p>
+                    <p className="text-gray-600 text-right capitalize mb-0">
+                      {companyDetails?.city || "City"},{" "}
+                      {companyDetails?.state || "State"}-
+                      {companyDetails?.zip || "Zip"}{" "}
+                      {companyDetails?.country || "Country"}
+                    </p>
+                  </div>
+                ) : (
+                  <div>
+                    <p className="text-gray-600  text-right capitalize  text-[12px] mb-0">
+                      Company Address
+                    </p>{" "}
+                    <p className="text-gray-600 text-right text-[12px] capitalize">
+                      {companyDetails?.city || "City"},{" "}
+                      {companyDetails?.state || "State"}-
+                      {companyDetails?.zip || "100000"}{" "}
+                      {companyDetails?.country || "Country"}
+                    </p>
+                  </div>
+                )}
+
+                {companyDetails?.companyEmail && (
+                  <p className="text-gray-600 text-right  text-[12px] mb-0">
+                    {companyDetails?.companyEmail}
+                  </p>
+                )}
+              </div>
             </div>
-            <div className=" ">
-              <h1 className="text-[20px] font-bold text-gray-900 capitalize text-right mt-1 mb-1 bg-white">
-                {companyDetails?.name || "Company Name"}
-              </h1>
-
-              {companyDetails?.city ? (
-                <div className="flex flex-col  text-[14px]">
-                  <p className="text-gray-600 text-right capitalize mb-0">
-                    {companyDetails?.address || "Company Address"}
+            <div className="mt-[16px]">
+              <p className="text-gray-500 text-[12px]  mb-[5px] underline">
+                Bill To :{" "}
+              </p>
+              <p className="text-gray-700 text-[12px] font-bold capitalize mb-0">
+                {customerDetails?.customerName || "Customer Details"}
+              </p>
+              {customerDetails?.customerAddress ? (
+                <div>
+                  <p className="text-gray-700 text-[12px] pt-1  not-only: capitalize mb-0">
+                    {customerDetails?.customerAddress || "Customer Address"}{" "}
+                    {customerDetails?.customerCity &&
+                      customerDetails?.customerCity}
+                    ,{" "}
+                    {customerDetails?.customerState &&
+                      customerDetails?.customerState}
+                    -
+                    {customerDetails?.customerZip &&
+                      customerDetails?.customerZip}{" "}
+                    {customerDetails?.customerCountry &&
+                      customerDetails?.customerCountry}
                   </p>
-                  <p className="text-gray-600 text-right capitalize mb-0">
-                    {companyDetails?.city || "City"},{" "}
-                    {companyDetails?.state || "State"}-
-                    {companyDetails?.zip || "Zip"}{" "}
-                    {companyDetails?.country || "Country"}
-                  </p>
+                  {customerDetails?.customerEmail && (
+                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                      {customerDetails?.customerEmail}
+                    </p>
+                  )}
                 </div>
               ) : (
-                <div>
-                  <p className="text-gray-600  text-right capitalize  text-[14px] mb-0">
-                    Company Address
-                  </p>{" "}
-                  <p className="text-gray-600 text-right text-[14px] capitalize">
-                    {companyDetails?.city || "City"},{" "}
-                    {companyDetails?.state || "State"}-
-                    {companyDetails?.zip || "100000"}{" "}
-                    {companyDetails?.country || "Country"}
+                <div className="text-gray-700 text-[12px]  not-only: capitalize">
+                  <p className="text-gray-700 text-[12px]  not-only: capitalize mb-0">
+                    Address City, State , Zip, Country
                   </p>
+                  {customerDetails?.customerEmail && (
+                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                      {customerDetails?.customerEmail}
+                    </p>
+                  )}
+                </div>
+              )}
+            </div>
+            <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
+              <table className="w-full border-separate border-spacing-0">
+                <thead className="  bg-[#f5f5f5] z-10 text-[12px]">
+                  <tr>
+                    <th
+                      style={{
+                        textAlign: "left",
+                        paddingTop: "8px",
+                        paddingBottom: "8px",
+                      }}
+                      className="  px-[10px]   font-semibold bg-[#f5f5f5]"
+                    >
+                      <p> Product Name</p>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "right",
+                        paddingTop: "8px",
+                        paddingBottom: "8px",
+                      }}
+                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
+                    >
+                      <p> Quantity</p>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "right",
+                        paddingTop: "8px",
+                        paddingBottom: "8px",
+                      }}
+                      className="  px-[10px]  font-semibold bg-[#f5f5f5]"
+                    >
+                      <p> Price</p>
+                    </th>
+                    <th
+                      style={{
+                        textAlign: "right",
+                        paddingTop: "8px",
+                        paddingBottom: "8px",
+                      }}
+                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
+                    >
+                      <p> Total</p>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {items?.map((item, index) => {
+                    const price = Number(item?.price || 0);
+                    const quantity = Number(item?.quantity || 0);
+                    const total = price * quantity;
+
+                    return (
+                      <tr
+                        key={index}
+                        className="bg-[#fafafa]   text-[12px]  "
+                        style={{
+                          paddingBottom: "5px",
+                        }}
+                      >
+                        <td
+                          className="capitalize   pl-[10px]"
+                          style={{
+                            textAlign: "left",
+                            paddingTop: "8px",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          {item?.name}
+                        </td>
+                        <td
+                          className="text-right px-[10px]  "
+                          style={{
+                            textAlign: "right",
+                            paddingTop: "8px",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          {quantity}
+                        </td>
+                        <td
+                          className="text-right px-[10px]  "
+                          style={{
+                            textAlign: "right",
+                            paddingTop: "8px",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          {price.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            minimumFractionDigits: 2,
+                          })}
+                        </td>
+                        <td
+                          className="text-right px-[10px]   "
+                          style={{
+                            textAlign: "right",
+                            paddingTop: "8px",
+                            paddingBottom: "8px",
+                          }}
+                        >
+                          {total.toLocaleString("en-US", {
+                            style: "currency",
+                            currency: "USD",
+                            minimumFractionDigits: 2,
+                          })}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+              {items.length === 0 && (
+                <div className="text-center py-[10px] text-[12px] w-full bg-gray-50">
+                  No items added
                 </div>
               )}
 
-              {companyDetails?.companyEmail && (
-                <p className="text-gray-600 text-right  text-[14px] mb-0">
-                  {companyDetails?.companyEmail}
-                </p>
-              )}
-            </div>
-          </div>
-
-          <div className="mt-[16px]">
-            <p className="text-gray-500 text-[14px]  mb-[5px] underline">
-              Bill To :{" "}
-            </p>
-            <p className="text-gray-700 text-[14px] font-bold capitalize mb-0">
-              {customerDetails?.customerName || "Customer Details"}
-            </p>
-            {customerDetails?.customerAddress ? (
-              <div>
-                <p className="text-gray-700 text-[14px] pt-1  not-only: capitalize mb-0">
-                  {customerDetails?.customerAddress || "Customer Address"}{" "}
-                  {customerDetails?.customerCity &&
-                    customerDetails?.customerCity}
-                  ,{" "}
-                  {customerDetails?.customerState &&
-                    customerDetails?.customerState}
-                  -
-                  {customerDetails?.customerZip && customerDetails?.customerZip}{" "}
-                  {customerDetails?.customerCountry &&
-                    customerDetails?.customerCountry}
-                </p>
-                {customerDetails?.customerEmail && (
-                  <p className="text-gray-700 text-[14px] mb-[10px]">
-                    {customerDetails?.customerEmail}
-                  </p>
-                )}
-              </div>
-            ) : (
-              <div className="text-gray-700 text-[14px]  not-only: capitalize">
-                <p className="text-gray-700 text-[14px]  not-only: capitalize mb-0">
-                  Address City, State , Zip, Country
-                </p>
-                {customerDetails?.customerEmail && (
-                  <p className="text-gray-700 text-[14px] mb-[10px]">
-                    {customerDetails?.customerEmail}
-                  </p>
-                )}
-              </div>
-            )}
-          </div>
-          <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
-            <table className="w-full border-separate border-spacing-0">
-              <thead className="  bg-[#f5f5f5] z-10 text-[14px]">
-                <tr className="">
-                  <th className="text-left px-[10px] py-[5px] font-semibold pb-[10px]">
-                    Product Name
-                  </th>
-                  <th className="text-right px-[10px] py-[5px] font-semibold pb-[10px]">
-                    Quantity
-                  </th>
-                  <th className="text-right px-[10px] py-[5px] font-semibold pb-[10px]">
-                    Price
-                  </th>
-                  <th className="text-right px-[10px] py-[5px] font-semibold pb-[10px]">
-                    Total
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody>
-                {items?.map((item, index) => {
-                  const price = Number(item?.price || 0);
-                  const quantity = Number(item?.quantity || 0);
-                  const total = price * quantity;
-
-                  return (
-                    <tr
-                      key={index}
-                      className="bg-[#fafafa] border-b border-[#e0e0e0] text-[14px] pb-[10px]"
-                    >
-                      <td className="capitalize py-[5px] pl-[10px]">
-                        {item?.name}
-                      </td>
-                      <td className="text-right px-[10px] py-[5px]">
-                        {quantity}
-                      </td>
-                      <td className="text-right px-[10px] py-[5px]">
-                        {price.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 2,
-                        })}
-                      </td>
-                      <td className="text-right px-[10px] py-[5px]  ">
-                        {total.toLocaleString("en-US", {
-                          style: "currency",
-                          currency: "USD",
-                          minimumFractionDigits: 2,
-                        })}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-            {items.length === 0 && (
-              <div className="text-center py-[10px] text-[14px] w-full bg-gray-50">
-                No items added
-              </div>
-            )}
- 
-            <div className="grid grid-cols-2 gap-y-2 mt-16 pr-4 w-full max-w-md ml-auto">
-              <div className="text-[14px] font-semibold text-right">
-                Subtotal:
-              </div>
-              <div className="text-[14px] text-right">
-                {subtotal.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
-              </div>
-              <div className="text-[14px] font-semibold text-right">
-                Tax Rate:
-              </div>
-              <div className="text-[14px] text-right">{taxRate}%</div>
-              <div className="text-[14px] font-semibold text-right">
-                Discount Rate:
-              </div>
-              <div className="text-[14px] text-right">{discountRate}%</div>
-              <div className="col-span-2 border-t pt-2 mt-2"></div>
-              <div className="text-[14px] font-bold text-right mb-[10px]">
-                Total:
-              </div>
-              <div className="text-[14px] font-bold text-right  mb-[10px]">
-                {computedTotal.toLocaleString("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                })}
+              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-20 ">
+                <div className="text-[12px] font-semibold text-right">
+                  Subtotal:
+                </div>
+                <div className="text-[12px] text-right">
+                  {subtotal.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+                </div>
+                <div className="text-[12px] font-semibold text-right">
+                  Tax Rate:
+                </div>
+                <div className="text-[12px] text-right">{taxRate}%</div>
+                <div className="text-[12px] font-semibold text-right">
+                  Discount Rate:
+                </div>
+                <div className="text-[12px] text-right">{discountRate}%</div>
+                <div className="col-span-2 border-t pt-2 mt-2"></div>
+                <div className="text-[12px] font-bold text-right mb-[10px]">
+                  Total:
+                </div>
+                <div className="text-[12px] font-bold text-right  mb-[10px]">
+                  {computedTotal.toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                  })}
+                </div>
               </div>
             </div>
+            <div style={{ height: 40 }} /> {/* 40px of space at the bottom */}
           </div>
         </div>
- 
       </div>
     </div>
   );
