@@ -2,7 +2,7 @@
 
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import useInvoiceStore from "@/store/invoiceStore";
-import Image from "next/image";
+import { RiFileDownloadLine } from "react-icons/ri";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
 
@@ -111,12 +111,25 @@ function ViewInvoice() {
     <div>
       <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
         {productDetailsTab?.completed && (
-          <button
-            onClick={handleDownloadPDF}
-            className="mb-4 px-4 py-2 bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700 absolute top-0 right-0 z-10"
+          <div
+            style={{
+              position: "absolute",
+              top: "10px",
+              right: "20px",
+              zIndex: 1000,
+            }}
           >
-            Download PDF
-          </button>
+            <button
+              onClick={handleDownloadPDF}
+              style={{
+                padding: "10px 20px",
+              }}
+              className=" flex items-center gap-2  bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700   z-10"
+            >
+              <p className="text-sm font-semibold"> Download Invoice</p>
+              <RiFileDownloadLine />
+            </button>
+          </div>
         )}
         <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
           <div

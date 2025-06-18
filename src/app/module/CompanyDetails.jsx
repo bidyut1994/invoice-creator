@@ -285,14 +285,14 @@ export default function CompanyDetails() {
           </div>
 
           <div className="flex justify-end gap-3 sticky bottom-0 bg-white w-full left-0 py-5 border-t px-10">
-            <Button
+            {/* <Button
               type="button"
               variant="outline"
               className="text-red-600 border-red-600"
               onClick={handleReset}
             >
               Reset
-            </Button>
+            </Button> */}
             <Button type="submit" disabled={!formValues.name}>
               Save and Continue
               <FaArrowRightLong />
