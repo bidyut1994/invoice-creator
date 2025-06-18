@@ -52,13 +52,13 @@ export default function Sidebar() {
       <div className="flex flex-col gap-4 items-center justify-center mt-20 px-2">
         <button
           type="button"
-          className={`flex h-[90px] items-center justify-center w-full flex-col gap-2 cursor-pointer relative p-3 ${
+          className={`flex h-[90px] items-center rounded-md justify-center w-full flex-col gap-2 cursor-pointer relative p-3 ${
             activeTab === "company-details"
               ? "bg-[#7dd3fc]"
               : " hover:bg-[#bae6fd]"
           }  ${
             companyDetailsTab?.completed
-              ? "text-green-700 border rounded-md border-green-500 "
+              ? "text-green-700 border  border-green-500 "
               : "text-[#075985]"
           }`}
           onClick={() => setActiveTab("company-details")}

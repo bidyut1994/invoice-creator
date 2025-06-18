@@ -61,6 +61,7 @@ function ViewInvoice() {
     taxRate,
     subtotal,
     total,
+    productDetailsTab,
   } = useInvoiceStore();
   console.log("items--from display-invoice ", items);
 
@@ -109,12 +110,14 @@ function ViewInvoice() {
   return (
     <div>
       <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
-        <button
-          onClick={handleDownloadPDF}
-          className="mb-4 px-4 py-2 bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700 absolute top-0 right-0 z-10"
-        >
-          Download PDF
-        </button>
+        {productDetailsTab?.completed && (
+          <button
+            onClick={handleDownloadPDF}
+            className="mb-4 px-4 py-2 bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700 absolute top-0 right-0 z-10"
+          >
+            Download PDF
+          </button>
+        )}
         <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
           <div
             ref={invoiceRef}
