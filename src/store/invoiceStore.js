@@ -21,10 +21,7 @@ const useInvoiceStore = create(
       activeTab: "company-details",
       setActiveTab: (tab) => set({ activeTab: tab }),
 
-      color: "#0369a1",
-      setColor: (color) => set({ color }),
-
-      companyDetails: getLocalStorage("companyDetails", {
+      companyDetails: {
         name: "",
         email: "",
         phone: "",
@@ -35,7 +32,7 @@ const useInvoiceStore = create(
         country: "",
         website: "",
         logoUrl: "",
-      }),
+      },
 
       setCompanyDetails: (details) =>
         set((state) => ({
@@ -135,5 +132,27 @@ const useInvoiceStore = create(
     }
   )
 );
+
+// Auto-fill localStorage with example data after 2s if empty (client-side only)
+if (typeof window !== "undefined") {
+  setTimeout(() => {
+    const existing = localStorage.getItem("companyDetails");
+    if (!existing || existing === "{}") {
+      localStorage.setItem("companyDetails");
+      // Optionally, trigger a reload or state update if needed
+    }
+  }, 2000);
+
+  const companyDetails = localStorage.getItem("companyDetails");
+  if (companyDetails && companyDetails.includes("oklch")) {
+    // Remove or reset the problematic data
+
+    console.log("oklch available");
+
+    localStorage.removeItem("companyDetails");
+    // Optionally, reload the page or reset Zustand state
+    window.location.reload();
+  }
+}
 
 export default useInvoiceStore;
