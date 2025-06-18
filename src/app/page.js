@@ -154,8 +154,8 @@ export default function Home() {
                   Secure & Private
                 </h3>
                 <p className="text-gray-600">
-                  Your data stays private. We don't store your information or
-                  require any personal details.
+                  Your data stays private. We don&apos;t store your information
+                  or require any personal details.
                 </p>
               </div>
             </div>
