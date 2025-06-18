@@ -182,8 +182,8 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 mb-4">
-                  "InvoiceFree saved me hours every week. The templates are
-                  beautiful and the process is so simple!"
+                  &quot;InvoiceFree saved me hours every week. The templates are
+                  beautiful and the process is so simple!&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center text-white font-semibold">
@@ -203,8 +203,8 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 mb-4">
-                  "Perfect for my small business. Professional invoices without
-                  the complexity of expensive software."
+                  &quot;Perfect for my small business. Professional invoices
+                  without the complexity of expensive software.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-green-600 rounded-full flex items-center justify-center text-white font-semibold">
@@ -226,8 +226,8 @@ export default function Home() {
                   ))}
                 </div>
                 <p className="text-gray-700 mb-4">
-                  "The customization options are amazing. I can match my brand
-                  perfectly and it looks so professional."
+                  &quot;The customization options are amazing. I can match my
+                  brand perfectly and it looks so professional.&quot;
                 </p>
                 <div className="flex items-center">
                   <div className="w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center text-white font-semibold">
