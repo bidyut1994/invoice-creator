@@ -171,7 +171,7 @@ function ViewInvoice() {
               </div>
             </div>
             <div className="mt-[16px]">
-              <p className="text-gray-500 text-[12px]  mb-[5px] underline">
+              <p className="text-gray-500 text-[12px]  mb-[5px]  ">
                 Bill To :{" "}
               </p>
               <p className="text-gray-700 text-[12px] font-bold capitalize mb-0">

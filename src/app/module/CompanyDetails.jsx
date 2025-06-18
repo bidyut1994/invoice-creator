@@ -34,7 +34,14 @@ export const OptionalLabel = ({ children }) => (
 );
 
 export default function CompanyDetails() {
-  const { setActiveTab, companyDetails, setCompanyDetails } = useInvoiceStore();
+  const {
+    setActiveTab,
+    companyDetails,
+    setCompanyDetails,
+    companyDetailsTab,
+    setCustomerDetailsTab,
+    setCompanyDetailsTab,
+  } = useInvoiceStore();
 
   const {
     register,
@@ -94,6 +101,9 @@ export default function CompanyDetails() {
         data.companyPhone
       ) {
         localStorage.setItem("companyDetails", JSON.stringify(data));
+
+        setCompanyDetailsTab({ completed: true, active: true });
+        setCustomerDetailsTab({ completed: false, active: true });
         setActiveTab("customer");
       }
     },

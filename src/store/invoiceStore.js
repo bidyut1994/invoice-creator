@@ -20,7 +20,39 @@ const useInvoiceStore = create(
     (set) => ({
       activeTab: "company-details",
       setActiveTab: (tab) => set({ activeTab: tab }),
+      companyDetailsTab: {
+        completed: false,
+        active: true,
+      },
+      customerDetailsTab: {
+        completed: false,
+        active: false,
+      },
+      productDetailsTab: {
+        completed: false,
+        active: false,
+      },
+      paymentDetailsTab: {
+        completed: false,
+        active: false,
+      },
 
+      setCompanyDetailsTab: (tab) =>
+        set((state) => ({
+          companyDetailsTab: { ...state.companyDetailsTab, ...tab },
+        })),
+      setCustomerDetailsTab: (tab) =>
+        set((state) => ({
+          customerDetailsTab: { ...state.customerDetailsTab, ...tab },
+        })),
+      setProductDetailsTab: (tab) =>
+        set((state) => ({
+          productDetailsTab: { ...state.productDetailsTab, ...tab },
+        })),
+      setPaymentDetailsTab: (tab) =>
+        set((state) => ({
+          paymentDetailsTab: { ...state.paymentDetailsTab, ...tab },
+        })),
       companyDetails: {
         name: "",
         email: "",

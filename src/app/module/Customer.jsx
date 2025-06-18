@@ -31,8 +31,13 @@ const OptionalLabel = ({ children }) => (
 );
 
 export default function Customer() {
-  const { setActiveTab, customerDetails, setCustomerDetails } =
-    useInvoiceStore();
+  const {
+    setActiveTab,
+    customerDetails,
+    setCustomerDetails,
+    setCustomerDetailsTab,
+    setProductDetailsTab,
+  } = useInvoiceStore();
 
   const {
     register,
@@ -88,6 +93,8 @@ export default function Customer() {
         data.customerZip &&
         data.customerCountry
       ) {
+        setCustomerDetailsTab({ completed: true, active: true });
+        setProductDetailsTab({ completed: false, active: true });
         setActiveTab("product-details");
       }
     },

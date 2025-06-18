@@ -19,7 +19,14 @@ const productSchema = z.object({
 });
 
 export default function ProductDetails() {
-  const { items, setItems, setActiveTab, setSubtotal } = useInvoiceStore();
+  const {
+    items,
+    setItems,
+    setActiveTab,
+    setSubtotal,
+    setProductDetailsTab,
+    setPaymentDetailsTab,
+  } = useInvoiceStore();
   const {
     control,
     register,
@@ -47,6 +54,8 @@ export default function ProductDetails() {
     setItems(data.products);
     if (data.products.length > 0) {
       setActiveTab("payment-details");
+      setProductDetailsTab({ completed: true, active: true });
+      setPaymentDetailsTab({ completed: false, active: true });
     }
   };
 
