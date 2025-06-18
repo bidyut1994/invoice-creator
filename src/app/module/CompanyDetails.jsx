@@ -242,7 +242,7 @@ export default function CompanyDetails() {
             </div>
 
             <div>
-              <OptionalLabel>Phone</OptionalLabel>
+              <RequiredLabel>Phone</RequiredLabel>
               <input
                 {...register("companyPhone")}
                 className="w-full p-2 border rounded-md"

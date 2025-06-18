@@ -11,8 +11,7 @@ export const companyDetailsSchema = z.object({
   companyPhone: z
     .string()
     .regex(/^\+?[\d\s-]{10,}$/, "Invalid phone number format")
-    .optional()
-    .nullable(),
+    .optional(),
   companyLogoUrl: z.string().optional().nullable(),
   companyWebsite: z.string().optional().nullable(),
 });
