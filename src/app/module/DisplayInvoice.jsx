@@ -341,7 +341,7 @@ function ViewInvoice() {
                   })}
                 </tbody>
               </table>
-              {items.length === 0 && (
+              {items?.length === 0 && (
                 <div className="text-center py-[10px] text-[12px] w-full bg-gray-50">
                   No items added
                 </div>

@@ -199,7 +199,7 @@ export default function DisplayInvoice() {
               })}
             </tbody>
           </table>
-          {items.length === 0 && (
+          {items?.length === 0 && (
             <div className="text-center py-10 text-xs w-full bg-gray-50">
               No items added
             </div>

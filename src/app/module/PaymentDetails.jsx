@@ -15,6 +15,12 @@ export default function PaymentDetails() {
     setTaxRate,
     discountRate,
     setDiscountRate,
+    setProductDetailsTab,
+    setCompanyDetailsTab,
+    setCustomerDetailsTab,
+    setPaymentDetailsTab,
+    customerDetails,
+    setCustomerDetails,
   } = useInvoiceStore();
 
   // Calculate total with tax and discount
@@ -39,8 +45,34 @@ export default function PaymentDetails() {
     [setDiscountRate]
   );
 
+  const handleCreateNewInvoice = () => {
+    setCustomerDetails({
+      customerName: "",
+      customerEmail: "",
+      customerPhone: "",
+      customerAddress: "",
+      customerCity: "",
+      customerState: "",
+      customerZip: "",
+      customerCountry: "",
+    });
+    setInvoiceDetails({});
+    setItems([]);
+    setSubtotal(0);
+    setTaxRate(0);
+    setDiscountRate(0);
+
+    setCompanyDetailsTab({ completed: true, active: true });
+    setCustomerDetailsTab({ completed: false, active: true });
+    setProductDetailsTab({ completed: false, active: false });
+    setPaymentDetailsTab({ completed: false, active: false });
+    console.log("customerDetails---", customerDetails);
+
+    setActiveTab("customer");
+  };
+
   return (
-    <div className="relative h-[100vh]">
+    <div className="relative h-[100vh]  ">
       <div className="text-2xl sticky top-0 left-0 bg-white z-[50] py-5 px-12 flex items-center gap-4 border-b">
         <MdOutlinePayments className="text-2xl text-[#0369a1]" />
         <p className="font-bold">Enter Payment Details</p>
@@ -84,11 +116,15 @@ export default function PaymentDetails() {
               currency: "USD",
             })}
           </div>
-
-
-
-          
         </div>
+      </div>
+      <div className=" absolute bottom-10 right-10 w-full flex justify-end">
+        <button
+          className="bg-blue-600 cursor-pointer text-white px-4 py-2 rounded hover:bg-blue-700"
+          onClick={() => handleCreateNewInvoice()}
+        >
+          <p className="text-sm font-semibold"> Create new Invoice</p>
+        </button>
       </div>
     </div>
   );
