@@ -65,7 +65,9 @@ function ViewInvoice() {
   console.log("items--from display-invoice ", items);
 
   useEffect(() => {
-    setInvoiceNumber(generateInvoiceNumber());
+    const invoiceNumber = generateInvoiceNumber();
+
+    setInvoiceNumber(`IN${invoiceNumber}`);
   }, []);
   const computedTotal = useMemo(() => {
     const tax = (subtotal * (Number(taxRate) || 0)) / 100;
@@ -80,7 +82,7 @@ function ViewInvoice() {
     if (!input) return;
     const a4Width = 595.28;
     const a4Height = 841.89;
-    const canvas = await html2canvas(input, { scale: 1.5 });
+    const canvas = await html2canvas(input, { scale: 2 });
     const imgData = canvas.toDataURL("image/png");
     const imgWidth = a4Width;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
@@ -101,7 +103,7 @@ function ViewInvoice() {
         if (heightLeft > 0) pdf.addPage();
       }
     }
-    pdf.save(`invoice-${invoiceNumber}.pdf`);
+    pdf.save(`${invoiceNumber}.pdf`);
   };
 
   return (
