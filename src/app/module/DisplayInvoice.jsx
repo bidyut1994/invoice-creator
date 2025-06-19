@@ -213,7 +213,6 @@ function ViewInvoice() {
               )}
             </div>
             <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
-              {/* Grid Header */}
               <div
                 style={{ padding: "10px" }}
                 className="grid grid-cols-4  bg-[#f5f5f5]  text-[12px] text-[#111827] font-semibold"
@@ -224,8 +223,7 @@ function ViewInvoice() {
                 <div className="text-right">Total</div>
               </div>
 
-              {/* Grid Items */}
-              <div className="space-y-2">
+              <div className="space-y-2 ">
                 {items?.map((item, index) => {
                   const price = Number(item?.price || 0);
                   const quantity = Number(item?.quantity || 0);
@@ -258,14 +256,13 @@ function ViewInvoice() {
                 })}
               </div>
 
-              {/* Empty State */}
               {items?.length === 0 && (
-                <div className="text-center py-[20px] text-[12px] w-full bg-[#f9fafb] border border-[#e5e7eb] rounded-b-lg">
+                <div className="text-center py-[20px] text-[12px] w-full bg-[#f9fafb] border border-[#e5e7eb]  ">
                   No items added
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-0">
+              <div className="grid grid-cols-2 gap-y-2 pr-2 w-full max-w-md ml-auto absolute bottom-[40px] right-0">
                 <div className="text-[12px] font-semibold text-right">
                   Subtotal:
                 </div>
