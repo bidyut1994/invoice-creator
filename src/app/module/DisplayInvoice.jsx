@@ -214,7 +214,7 @@ function ViewInvoice() {
             </div>
             <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
               <div
-                style={{ padding: "10px" }}
+                style={{ padding: "10px 10px 10px 10px !important" }}
                 className="grid grid-cols-4  bg-[#f5f5f5]  text-[12px] text-[#111827] font-semibold"
               >
                 <div className="text-left">Product Name</div>
@@ -232,7 +232,7 @@ function ViewInvoice() {
                   return (
                     <div
                       key={index}
-                      style={{ padding: "8px" }}
+                      style={{ padding: "10px 10px 10px 10px !important" }}
                       className="grid grid-cols-4 gap-4 bg-[#fafafa]  text-[12px] "
                     >
                       <div className="capitalize text-left">{item?.name}</div>
