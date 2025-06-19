@@ -3,7 +3,6 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import useInvoiceStore from "@/store/invoiceStore";
 import { RiFileDownloadLine } from "react-icons/ri";
-import html2pdf from "html2pdf.js";
 
 export function generateInvoiceNumber() {
   return String(Math.floor(1000 + Math.random() * 9000));
@@ -62,7 +61,6 @@ function ViewInvoice() {
     total,
     productDetailsTab,
   } = useInvoiceStore();
-  console.log("items--from display-invoice ", items);
 
   useEffect(() => {
     const invoiceNumber = generateInvoiceNumber();
@@ -77,17 +75,24 @@ function ViewInvoice() {
 
   const invoiceRef = useRef();
 
-  const handleDownloadPDF = () => {
-    const element = invoiceRef.current;
-    const opt = {
-      margin: 1,
-      filename: `${invoiceNumber}.pdf`,
-      image: { type: "jpeg", quality: 2 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
-    };
+  const handleDownloadPDF = async () => {
+    try {
+      // Dynamic import to avoid SSR issues
+      const html2pdf = (await import("html2pdf.js")).default;
 
-    html2pdf().set(opt).from(element).save();
+      const element = invoiceRef.current;
+      const opt = {
+        margin: 1,
+        filename: `${invoiceNumber}.pdf`,
+        image: { type: "jpeg", quality: 2 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+      };
+
+      html2pdf().set(opt).from(element).save();
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+    }
   };
 
   return (
@@ -114,7 +119,7 @@ function ViewInvoice() {
             </button>
           </div>
         )}
-        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16 bg-[#fff]  scale-80 p-10">
+        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-10 bg-[#fff]  scale-80 p-10">
           <div ref={invoiceRef} className="bg-[#fff] min-h-[750px]  relative">
             <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
               <div>
