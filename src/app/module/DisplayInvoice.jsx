@@ -67,7 +67,6 @@ function ViewInvoice() {
 
   useEffect(() => {
     const invoiceNumber = generateInvoiceNumber();
-
     setInvoiceNumber(`IN${invoiceNumber}`);
   }, []);
   const computedTotal = useMemo(() => {
@@ -109,13 +108,22 @@ function ViewInvoice() {
 
   return (
     <div>
-      <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
+      <div
+        style={{
+          paddingLeft: 0,
+          paddingRight: 0,
+          height: "100vh",
+          overflowY: "auto",
+          overflowX: "hidden",
+          background: "#f3f4f6",
+        }}
+      >
         {productDetailsTab?.completed && (
           <div
             style={{
               position: "absolute",
-              top: "10px",
-              right: "20px",
+              top: 10,
+              right: 20,
               zIndex: 1000,
             }}
           >
@@ -123,42 +131,114 @@ function ViewInvoice() {
               onClick={handleDownloadPDF}
               style={{
                 padding: "10px 20px",
+                display: "flex",
+                alignItems: "center",
+                gap: 8,
+                background: "#2563eb",
+                color: "white",
+                borderRadius: 6,
+                cursor: "pointer",
+                border: "none",
+                fontWeight: 600,
+                fontSize: 14,
+                boxShadow: "0 2px 8px rgba(37,99,235,0.08)",
               }}
-              className=" flex items-center gap-2  bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700   z-10"
             >
-              <p className="text-sm font-semibold"> Download Invoice</p>
+              <p style={{ fontSize: 14, fontWeight: 600, margin: 0 }}>
+                {" "}
+                Download Invoice
+              </p>
               <RiFileDownloadLine />
             </button>
           </div>
         )}
-        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
+        <div
+          style={{
+            borderRadius: 4,
+            boxShadow: "0 2px 8px #e0e0e0",
+            border: "1px solid #e0e0e0",
+            position: "relative",
+            top: -64,
+            transform: "scale(0.8)",
+          }}
+        >
           <div
             ref={invoiceRef}
-            className="bg-[#fff] min-h-[850px] p-16 relative"
+            style={{
+              background: "#fff",
+              minHeight: 850,
+              padding: 64,
+              position: "relative",
+            }}
           >
-            <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
+            <div
+              style={{
+                borderBottom: "1px solid #e0e0e0",
+                display: "flex",
+                justifyContent: "space-between",
+                background: "#fff",
+                paddingBottom: 12,
+              }}
+            >
               <div>
-                <p className="text-[32px] font-bold text-gray-500 mb-1">
+                <p
+                  style={{
+                    fontSize: 32,
+                    fontWeight: "bold",
+                    color: "#6b7280",
+                    marginBottom: 4,
+                  }}
+                >
                   INVOICE
                 </p>
-                <p className="text-gray-500 text-[12px] mb-0">
+                <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 0 }}>
                   Invoice Date: {invoiceDetails?.issueDate}
                 </p>
-                <p className="text-gray-500 text-[12px]  ">
+                <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 0 }}>
                   Invoice Number: {invoiceNumber}
                 </p>
               </div>
-              <div className=" ">
-                <h1 className="text-[20px] font-bold text-gray-900 capitalize text-right mt-1 mb-1 bg-white">
+              <div>
+                <h1
+                  style={{
+                    fontSize: 20,
+                    fontWeight: "bold",
+                    color: "#111827",
+                    textTransform: "capitalize",
+                    textAlign: "right",
+                    marginTop: 4,
+                    marginBottom: 4,
+                    background: "#fff",
+                  }}
+                >
                   {companyDetails?.name || "Company Name"}
                 </h1>
-
                 {companyDetails?.city ? (
-                  <div className="flex flex-col  text-[12px]">
-                    <p className="text-gray-600 text-right capitalize mb-0">
+                  <div
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      fontSize: 12,
+                    }}
+                  >
+                    <p
+                      style={{
+                        color: "#4b5563",
+                        textAlign: "right",
+                        textTransform: "capitalize",
+                        marginBottom: 0,
+                      }}
+                    >
                       {companyDetails?.address || "Company Address"}
                     </p>
-                    <p className="text-gray-600 text-right capitalize mb-0">
+                    <p
+                      style={{
+                        color: "#4b5563",
+                        textAlign: "right",
+                        textTransform: "capitalize",
+                        marginBottom: 0,
+                      }}
+                    >
                       {companyDetails?.city || "City"},{" "}
                       {companyDetails?.state || "State"}-
                       {companyDetails?.zip || "Zip"}{" "}
@@ -167,10 +247,25 @@ function ViewInvoice() {
                   </div>
                 ) : (
                   <div>
-                    <p className="text-gray-600  text-right capitalize  text-[12px] mb-0">
+                    <p
+                      style={{
+                        color: "#4b5563",
+                        textAlign: "right",
+                        textTransform: "capitalize",
+                        fontSize: 12,
+                        marginBottom: 0,
+                      }}
+                    >
                       Company Address
-                    </p>{" "}
-                    <p className="text-gray-600 text-right text-[12px] capitalize">
+                    </p>
+                    <p
+                      style={{
+                        color: "#4b5563",
+                        textAlign: "right",
+                        fontSize: 12,
+                        textTransform: "capitalize",
+                      }}
+                    >
                       {companyDetails?.city || "City"},{" "}
                       {companyDetails?.state || "State"}-
                       {companyDetails?.zip || "100000"}{" "}
@@ -178,24 +273,46 @@ function ViewInvoice() {
                     </p>
                   </div>
                 )}
-
                 {companyDetails?.companyEmail && (
-                  <p className="text-gray-600 text-right  text-[12px] mb-0">
+                  <p
+                    style={{
+                      color: "#4b5563",
+                      textAlign: "right",
+                      fontSize: 12,
+                      marginBottom: 0,
+                    }}
+                  >
                     {companyDetails?.companyEmail}
                   </p>
                 )}
               </div>
             </div>
-            <div className="mt-[16px]">
-              <p className="text-gray-500 text-[12px]  mb-[5px]  ">
-                Bill To :{" "}
+            <div style={{ marginTop: 16 }}>
+              <p style={{ color: "#6b7280", fontSize: 12, marginBottom: 5 }}>
+                Bill To :
               </p>
-              <p className="text-gray-700 text-[12px] font-bold capitalize mb-0">
+              <p
+                style={{
+                  color: "#374151",
+                  fontSize: 12,
+                  fontWeight: "bold",
+                  textTransform: "capitalize",
+                  marginBottom: 0,
+                }}
+              >
                 {customerDetails?.customerName || "Customer Details"}
               </p>
               {customerDetails?.customerAddress ? (
                 <div>
-                  <p className="text-gray-700 text-[12px] pt-1  not-only: capitalize mb-0">
+                  <p
+                    style={{
+                      color: "#374151",
+                      fontSize: 12,
+                      paddingTop: 4,
+                      textTransform: "capitalize",
+                      marginBottom: 0,
+                    }}
+                  >
                     {customerDetails?.customerAddress || "Customer Address"}{" "}
                     {customerDetails?.customerCity &&
                       customerDetails?.customerCity}
@@ -209,111 +326,154 @@ function ViewInvoice() {
                       customerDetails?.customerCountry}
                   </p>
                   {customerDetails?.customerEmail && (
-                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                    <p
+                      style={{
+                        color: "#374151",
+                        fontSize: 12,
+                        marginBottom: 10,
+                      }}
+                    >
                       {customerDetails?.customerEmail}
                     </p>
                   )}
                 </div>
               ) : (
-                <div className="text-gray-700 text-[12px]  not-only: capitalize">
-                  <p className="text-gray-700 text-[12px]  not-only: capitalize mb-0">
+                <div
+                  style={{
+                    color: "#374151",
+                    fontSize: 12,
+                    textTransform: "capitalize",
+                  }}
+                >
+                  <p
+                    style={{
+                      color: "#374151",
+                      fontSize: 12,
+                      textTransform: "capitalize",
+                      marginBottom: 0,
+                    }}
+                  >
                     Address City, State , Zip, Country
                   </p>
                   {customerDetails?.customerEmail && (
-                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                    <p
+                      style={{
+                        color: "#374151",
+                        fontSize: 12,
+                        marginBottom: 10,
+                      }}
+                    >
                       {customerDetails?.customerEmail}
                     </p>
                   )}
                 </div>
               )}
             </div>
-            <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
-              <table className="w-full border-separate border-spacing-0">
-                <thead className="  bg-[#f5f5f5] z-10 text-[12px]">
+            <div
+              style={{ background: "#fff", paddingTop: 20, overflowX: "auto" }}
+            >
+              <table
+                style={{
+                  width: "100%",
+                  borderCollapse: "separate",
+                  borderSpacing: 0,
+                }}
+              >
+                <thead
+                  style={{ background: "#f5f5f5", zIndex: 10, fontSize: 12 }}
+                >
                   <tr>
                     <th
                       style={{
                         textAlign: "left",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: 8,
+                        paddingBottom: 8,
+                        paddingLeft: 10,
+                        fontWeight: 600,
+                        background: "#f5f5f5",
                       }}
-                      className="  px-[10px]   font-semibold bg-[#f5f5f5]"
                     >
                       <p> Product Name</p>
                     </th>
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: 8,
+                        paddingBottom: 8,
+                        paddingLeft: 10,
+                        fontWeight: 600,
+                        background: "#f5f5f5",
                       }}
-                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
                     >
                       <p> Quantity</p>
                     </th>
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: 8,
+                        paddingBottom: 8,
+                        paddingLeft: 10,
+                        fontWeight: 600,
+                        background: "#f5f5f5",
                       }}
-                      className="  px-[10px]  font-semibold bg-[#f5f5f5]"
                     >
                       <p> Price</p>
                     </th>
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: 8,
+                        paddingBottom: 8,
+                        paddingLeft: 10,
+                        fontWeight: 600,
+                        background: "#f5f5f5",
                       }}
-                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
                     >
                       <p> Total</p>
                     </th>
                   </tr>
                 </thead>
-
                 <tbody>
                   {items?.map((item, index) => {
                     const price = Number(item?.price || 0);
                     const quantity = Number(item?.quantity || 0);
                     const total = price * quantity;
-
                     return (
                       <tr
                         key={index}
-                        className="bg-[#fafafa]   text-[12px]  "
                         style={{
-                          paddingBottom: "5px",
+                          background: "#fafafa",
+                          fontSize: 12,
+                          paddingBottom: 5,
                         }}
                       >
                         <td
-                          className="capitalize   pl-[10px]"
                           style={{
+                            textTransform: "capitalize",
+                            paddingLeft: 10,
                             textAlign: "left",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingTop: 8,
+                            paddingBottom: 8,
                           }}
                         >
                           {item?.name}
                         </td>
                         <td
-                          className="text-right px-[10px]  "
                           style={{
                             textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingLeft: 10,
+                            paddingTop: 8,
+                            paddingBottom: 8,
                           }}
                         >
                           {quantity}
                         </td>
                         <td
-                          className="text-right px-[10px]  "
                           style={{
                             textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingLeft: 10,
+                            paddingTop: 8,
+                            paddingBottom: 8,
                           }}
                         >
                           {price.toLocaleString("en-US", {
@@ -323,11 +483,11 @@ function ViewInvoice() {
                           })}
                         </td>
                         <td
-                          className="text-right px-[10px]   "
                           style={{
                             textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingLeft: 10,
+                            paddingTop: 8,
+                            paddingBottom: 8,
                           }}
                         >
                           {total.toLocaleString("en-US", {
@@ -342,34 +502,85 @@ function ViewInvoice() {
                 </tbody>
               </table>
               {items?.length === 0 && (
-                <div className="text-center py-[10px] text-[12px] w-full bg-gray-50">
+                <div
+                  style={{
+                    textAlign: "center",
+                    padding: "10px 0",
+                    fontSize: 12,
+                    width: "100%",
+                    background: "#f9fafb",
+                  }}
+                >
                   No items added
                 </div>
               )}
-
-              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-16 ">
-                <div className="text-[12px] font-semibold text-right">
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "1fr 1fr",
+                  gap: "8px 0",
+                  paddingRight: 16,
+                  width: "100%",
+                  maxWidth: 400,
+                  marginLeft: "auto",
+                  position: "absolute",
+                  bottom: 40,
+                  right: 64,
+                }}
+              >
+                <div
+                  style={{ fontSize: 12, fontWeight: 600, textAlign: "right" }}
+                >
                   Subtotal:
                 </div>
-                <div className="text-[12px] text-right">
+                <div style={{ fontSize: 12, textAlign: "right" }}>
                   {subtotal.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
                   })}
                 </div>
-                <div className="text-[12px] font-semibold text-right">
+                <div
+                  style={{ fontSize: 12, fontWeight: 600, textAlign: "right" }}
+                >
                   Tax Rate:
                 </div>
-                <div className="text-[12px] text-right">{taxRate}%</div>
-                <div className="text-[12px] font-semibold text-right">
+                <div style={{ fontSize: 12, textAlign: "right" }}>
+                  {taxRate}%
+                </div>
+                <div
+                  style={{ fontSize: 12, fontWeight: 600, textAlign: "right" }}
+                >
                   Discount Rate:
                 </div>
-                <div className="text-[12px] text-right">{discountRate}%</div>
-                <div className="col-span-2 border-t pt-2 mt-2"></div>
-                <div className="text-[12px] font-bold text-right mb-[10px]">
+                <div style={{ fontSize: 12, textAlign: "right" }}>
+                  {discountRate}%
+                </div>
+                <div
+                  style={{
+                    gridColumn: "span 2",
+                    borderTop: "1px solid #e5e7eb",
+                    paddingTop: 8,
+                    marginTop: 8,
+                  }}
+                ></div>
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    textAlign: "right",
+                    marginBottom: 10,
+                  }}
+                >
                   Total:
                 </div>
-                <div className="text-[12px] font-bold text-right  mb-[10px]">
+                <div
+                  style={{
+                    fontSize: 12,
+                    fontWeight: "bold",
+                    textAlign: "right",
+                    marginBottom: 10,
+                  }}
+                >
                   {computedTotal.toLocaleString("en-US", {
                     style: "currency",
                     currency: "USD",
