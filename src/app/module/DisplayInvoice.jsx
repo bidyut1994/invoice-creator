@@ -3,8 +3,7 @@
 import React, { useMemo, useRef, useState, useEffect } from "react";
 import useInvoiceStore from "@/store/invoiceStore";
 import { RiFileDownloadLine } from "react-icons/ri";
-import jsPDF from "jspdf";
-import html2canvas from "html2canvas";
+import html2pdf from "html2pdf.js";
 
 export function generateInvoiceNumber() {
   return String(Math.floor(1000 + Math.random() * 9000));
@@ -78,33 +77,17 @@ function ViewInvoice() {
 
   const invoiceRef = useRef();
 
-  const handleDownloadPDF = async () => {
-    const input = invoiceRef.current;
-    if (!input) return;
-    const a4Width = 595.28;
-    const a4Height = 841.89;
-    const canvas = await html2canvas(input, { scale: 2 });
-    const imgData = canvas.toDataURL("image/png");
-    const imgWidth = a4Width;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    const pdf = new jsPDF({
-      orientation: "portrait",
-      unit: "pt",
-      format: "a4",
-    });
-    let position = 0;
-    if (imgHeight < a4Height) {
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    } else {
-      let heightLeft = imgHeight;
-      while (heightLeft > 0) {
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        heightLeft -= a4Height;
-        position -= a4Height;
-        if (heightLeft > 0) pdf.addPage();
-      }
-    }
-    pdf.save(`${invoiceNumber}.pdf`);
+  const handleDownloadPDF = () => {
+    const element = invoiceRef.current;
+    const opt = {
+      margin: 1,
+      filename: `${invoiceNumber}.pdf`,
+      image: { type: "jpeg", quality: 2 },
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: "in", format: "a4", orientation: "portrait" },
+    };
+
+    html2pdf().set(opt).from(element).save();
   };
 
   return (
@@ -131,11 +114,8 @@ function ViewInvoice() {
             </button>
           </div>
         )}
-        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16  scale-80">
-          <div
-            ref={invoiceRef}
-            className="bg-[#fff] min-h-[850px] p-16 relative"
-          >
+        <div className=" rounded-sm shadow-md border border-[#e0e0e0] relative -top-16 bg-[#fff]  scale-80 p-10">
+          <div ref={invoiceRef} className="bg-[#fff] min-h-[750px]  relative">
             <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
               <div>
                 <p className="text-[32px] font-bold text-[#6b7280] mb-1">
@@ -347,7 +327,7 @@ function ViewInvoice() {
                 </div>
               )}
 
-              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-16 ">
+              <div className="grid grid-cols-2 gap-y-2 pr-4 w-full max-w-md ml-auto absolute bottom-[40px] right-0">
                 <div className="text-[12px] font-semibold text-right">
                   Subtotal:
                 </div>
