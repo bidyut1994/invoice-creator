@@ -213,121 +213,54 @@ function ViewInvoice() {
               )}
             </div>
             <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
-              <table className="w-full border-separate border-spacing-0">
-                <thead className="  bg-[#f5f5f5] z-10 text-[12px] text-[#111827]">
-                  <tr>
-                    <th
-                      style={{
-                        textAlign: "left",
-                        paddingTop: "5px",
-                        paddingBottom: "5px",
-                      }}
-                      className="  px-[10px]   font-semibold bg-[#f5f5f5] text-[#111827]"
-                    >
-                      <p> Product Name</p>
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "right",
-                        paddingTop: "5px",
-                        paddingBottom: "5px",
-                      }}
-                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
-                    >
-                      <p> Quantity</p>
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "right",
-                        paddingTop: "5px",
-                        paddingBottom: "5px",
-                      }}
-                      className="  px-[10px]  font-semibold bg-[#f5f5f5]"
-                    >
-                      <p> Price</p>
-                    </th>
-                    <th
-                      style={{
-                        textAlign: "right",
-                        paddingTop: "5px",
-                        paddingBottom: "5px",
-                      }}
-                      className="  px-[10px] font-semibold bg-[#f5f5f5]"
-                    >
-                      <p> Total</p>
-                    </th>
-                  </tr>
-                </thead>
+              {/* Grid Header */}
+              <div
+                style={{ padding: "10px" }}
+                className="grid grid-cols-4  bg-[#f5f5f5]  text-[12px] text-[#111827] font-semibold"
+              >
+                <div className="text-left">Product Name</div>
+                <div className="text-right">Quantity</div>
+                <div className="text-right">Price</div>
+                <div className="text-right">Total</div>
+              </div>
 
-                <tbody>
-                  {items?.map((item, index) => {
-                    const price = Number(item?.price || 0);
-                    const quantity = Number(item?.quantity || 0);
-                    const total = price * quantity;
+              {/* Grid Items */}
+              <div className="space-y-2">
+                {items?.map((item, index) => {
+                  const price = Number(item?.price || 0);
+                  const quantity = Number(item?.quantity || 0);
+                  const total = price * quantity;
 
-                    return (
-                      <tr
-                        key={index}
-                        className="bg-[#fafafa]   text-[12px]  "
-                        style={{
-                          paddingBottom: "5px",
-                        }}
-                      >
-                        <td
-                          className="capitalize   pl-[10px]"
-                          style={{
-                            textAlign: "left",
-                            paddingTop: "8px",
-                            paddingBottom: "6px",
-                          }}
-                        >
-                          {item?.name}
-                        </td>
-                        <td
-                          className="text-right px-[10px]  "
-                          style={{
-                            textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "6px",
-                          }}
-                        >
-                          {quantity}
-                        </td>
-                        <td
-                          className="text-right px-[10px]  "
-                          style={{
-                            textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "6px",
-                          }}
-                        >
-                          {price.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                            minimumFractionDigits: 2,
-                          })}
-                        </td>
-                        <td
-                          className="text-right px-[10px]   "
-                          style={{
-                            textAlign: "right",
-                            paddingTop: "8px",
-                            paddingBottom: "6px",
-                          }}
-                        >
-                          {total.toLocaleString("en-US", {
-                            style: "currency",
-                            currency: "USD",
-                            minimumFractionDigits: 2,
-                          })}
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+                  return (
+                    <div
+                      key={index}
+                      style={{ padding: "8px" }}
+                      className="grid grid-cols-4 gap-4 bg-[#fafafa]  text-[12px] "
+                    >
+                      <div className="capitalize text-left">{item?.name}</div>
+                      <div className="text-right">{quantity}</div>
+                      <div className="text-right">
+                        {price.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                        })}
+                      </div>
+                      <div className="text-right">
+                        {total.toLocaleString("en-US", {
+                          style: "currency",
+                          currency: "USD",
+                          minimumFractionDigits: 2,
+                        })}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Empty State */}
               {items?.length === 0 && (
-                <div className="text-center py-[10px] text-[12px] w-full bg-[#f9fafb]">
+                <div className="text-center py-[20px] text-[12px] w-full bg-[#f9fafb] border border-[#e5e7eb] rounded-b-lg">
                   No items added
                 </div>
               )}
