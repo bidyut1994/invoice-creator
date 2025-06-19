@@ -26,7 +26,7 @@ export default function DisplayInvoice() {
           <div role="status">
             <svg
               aria-hidden="true"
-              className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+              className="w-8 h-8 text-[#e5e7eb] animate-spin dark:text-[#4b5563] fill-blue-600"
               viewBox="0 0 100 101"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -109,7 +109,7 @@ function ViewInvoice() {
 
   return (
     <div>
-      <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-gray-100">
+      <div className=" md:px-20 h-[100vh] overflow-y-auto overflow-x-hidden bg-[#f3f4f6]">
         {productDetailsTab?.completed && (
           <div
             style={{
@@ -124,7 +124,7 @@ function ViewInvoice() {
               style={{
                 padding: "10px 20px",
               }}
-              className=" flex items-center gap-2  bg-blue-600 cursor-pointer  text-white rounded hover:bg-blue-700   z-10"
+              className=" flex items-center gap-2  bg-[#2563eb] cursor-pointer  text-white rounded hover:bg-[#1d4ed8]   z-10"
             >
               <p className="text-sm font-semibold"> Download Invoice</p>
               <RiFileDownloadLine />
@@ -138,27 +138,27 @@ function ViewInvoice() {
           >
             <div className="border-b border-[#e0e0e0] flex justify-between bg-[#fff] pb-[12px]">
               <div>
-                <p className="text-[32px] font-bold text-gray-500 mb-1">
+                <p className="text-[32px] font-bold text-[#6b7280] mb-1">
                   INVOICE
                 </p>
-                <p className="text-gray-500 text-[12px] mb-0">
+                <p className="text-[#6b7280] text-[12px] mb-0">
                   Invoice Date: {invoiceDetails?.issueDate}
                 </p>
-                <p className="text-gray-500 text-[12px]  ">
+                <p className="text-[#6b7280] text-[12px]  ">
                   Invoice Number: {invoiceNumber}
                 </p>
               </div>
               <div className=" ">
-                <h1 className="text-[20px] font-bold text-gray-900 capitalize text-right mt-1 mb-1 bg-white">
+                <h1 className="text-[20px] font-bold text-[#111827] capitalize text-right mt-1 mb-1 bg-[#fff]">
                   {companyDetails?.name || "Company Name"}
                 </h1>
 
                 {companyDetails?.city ? (
                   <div className="flex flex-col  text-[12px]">
-                    <p className="text-gray-600 text-right capitalize mb-0">
+                    <p className="text-[#4b5563] text-right capitalize mb-0">
                       {companyDetails?.address || "Company Address"}
                     </p>
-                    <p className="text-gray-600 text-right capitalize mb-0">
+                    <p className="text-[#4b5563] text-right capitalize mb-0">
                       {companyDetails?.city || "City"},{" "}
                       {companyDetails?.state || "State"}-
                       {companyDetails?.zip || "Zip"}{" "}
@@ -167,10 +167,10 @@ function ViewInvoice() {
                   </div>
                 ) : (
                   <div>
-                    <p className="text-gray-600  text-right capitalize  text-[12px] mb-0">
+                    <p className="text-[#4b5563]  text-right capitalize  text-[12px] mb-0">
                       Company Address
                     </p>{" "}
-                    <p className="text-gray-600 text-right text-[12px] capitalize">
+                    <p className="text-[#4b5563] text-right text-[12px] capitalize">
                       {companyDetails?.city || "City"},{" "}
                       {companyDetails?.state || "State"}-
                       {companyDetails?.zip || "100000"}{" "}
@@ -180,22 +180,22 @@ function ViewInvoice() {
                 )}
 
                 {companyDetails?.companyEmail && (
-                  <p className="text-gray-600 text-right  text-[12px] mb-0">
+                  <p className="text-[#4b5563] text-right  text-[12px] mb-0">
                     {companyDetails?.companyEmail}
                   </p>
                 )}
               </div>
             </div>
             <div className="mt-[16px]">
-              <p className="text-gray-500 text-[12px]  mb-[5px]  ">
+              <p className="text-[#6b7280] text-[12px]  mb-[5px]  ">
                 Bill To :{" "}
               </p>
-              <p className="text-gray-700 text-[12px] font-bold capitalize mb-0">
+              <p className="text-[#111827] text-[12px] font-bold capitalize mb-0">
                 {customerDetails?.customerName || "Customer Details"}
               </p>
               {customerDetails?.customerAddress ? (
                 <div>
-                  <p className="text-gray-700 text-[12px] pt-1  not-only: capitalize mb-0">
+                  <p className="text-[#111827] text-[12px] pt-1  not-only: capitalize mb-0">
                     {customerDetails?.customerAddress || "Customer Address"}{" "}
                     {customerDetails?.customerCity &&
                       customerDetails?.customerCity}
@@ -209,18 +209,18 @@ function ViewInvoice() {
                       customerDetails?.customerCountry}
                   </p>
                   {customerDetails?.customerEmail && (
-                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                    <p className="text-[#111827] text-[12px] mb-[10px]">
                       {customerDetails?.customerEmail}
                     </p>
                   )}
                 </div>
               ) : (
-                <div className="text-gray-700 text-[12px]  not-only: capitalize">
-                  <p className="text-gray-700 text-[12px]  not-only: capitalize mb-0">
+                <div className="text-[#111827] text-[12px]  not-only: capitalize">
+                  <p className="text-[#111827] text-[12px]  not-only: capitalize mb-0">
                     Address City, State , Zip, Country
                   </p>
                   {customerDetails?.customerEmail && (
-                    <p className="text-gray-700 text-[12px] mb-[10px]">
+                    <p className="text-[#111827] text-[12px] mb-[10px]">
                       {customerDetails?.customerEmail}
                     </p>
                   )}
@@ -229,23 +229,23 @@ function ViewInvoice() {
             </div>
             <div className="bg-[#fff]   pt-[20px]  overflow-x-auto">
               <table className="w-full border-separate border-spacing-0">
-                <thead className="  bg-[#f5f5f5] z-10 text-[12px]">
+                <thead className="  bg-[#f5f5f5] z-10 text-[12px] text-[#111827]">
                   <tr>
                     <th
                       style={{
                         textAlign: "left",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
                       }}
-                      className="  px-[10px]   font-semibold bg-[#f5f5f5]"
+                      className="  px-[10px]   font-semibold bg-[#f5f5f5] text-[#111827]"
                     >
                       <p> Product Name</p>
                     </th>
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
                       }}
                       className="  px-[10px] font-semibold bg-[#f5f5f5]"
                     >
@@ -254,8 +254,8 @@ function ViewInvoice() {
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
                       }}
                       className="  px-[10px]  font-semibold bg-[#f5f5f5]"
                     >
@@ -264,8 +264,8 @@ function ViewInvoice() {
                     <th
                       style={{
                         textAlign: "right",
-                        paddingTop: "8px",
-                        paddingBottom: "8px",
+                        paddingTop: "5px",
+                        paddingBottom: "5px",
                       }}
                       className="  px-[10px] font-semibold bg-[#f5f5f5]"
                     >
@@ -293,7 +293,7 @@ function ViewInvoice() {
                           style={{
                             textAlign: "left",
                             paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingBottom: "6px",
                           }}
                         >
                           {item?.name}
@@ -303,7 +303,7 @@ function ViewInvoice() {
                           style={{
                             textAlign: "right",
                             paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingBottom: "6px",
                           }}
                         >
                           {quantity}
@@ -313,7 +313,7 @@ function ViewInvoice() {
                           style={{
                             textAlign: "right",
                             paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingBottom: "6px",
                           }}
                         >
                           {price.toLocaleString("en-US", {
@@ -327,7 +327,7 @@ function ViewInvoice() {
                           style={{
                             textAlign: "right",
                             paddingTop: "8px",
-                            paddingBottom: "8px",
+                            paddingBottom: "6px",
                           }}
                         >
                           {total.toLocaleString("en-US", {
@@ -342,7 +342,7 @@ function ViewInvoice() {
                 </tbody>
               </table>
               {items?.length === 0 && (
-                <div className="text-center py-[10px] text-[12px] w-full bg-gray-50">
+                <div className="text-center py-[10px] text-[12px] w-full bg-[#f9fafb]">
                   No items added
                 </div>
               )}
